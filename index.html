@@ -1,0 +1,31 @@
+<html>
+    <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+        <link rel="stylesheet" href="index.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FizzBuzz App</title>
+    </head>
+    <body>
+        <audio id="bee-buzzing">
+            <source src="bee-buzzing.mp3" type="audio/mpeg">
+        </audio>
+        <div id="container">
+            <h1>FIZZ BUZZ! 🐝</h1>
+            <div id="inputs">
+                <div class="inp-div">
+                    <label for="start-num">from</label>
+                    <input id="start-num" class="inp" type="number" min="1" max="99" value="1">
+                </div>
+                <div class="inp-div">
+                    <label for="end-num">to</label>
+                    <input id="end-num" class="inp" type="number" min="2" max="100" value="30">
+                </div>
+                <button id="start" class="inp">Start</button>
+            </div>
+            <div id="output">
+                <p id="fizz-buzz">Choose a range of numbers between 1 and 100, and click Start to FizzBuzz them!</p>
+            </div>
+            <img id="bee" src="bee.png" alt="a cute, fuzzy bee">
+        </div>  
+    </body>
+    <script src="index.js"></script>
+</html>
