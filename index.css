@@ -133,6 +133,9 @@ label {
 .box {
     margin: 5px;
     background-color: white;
+    background-image: url("blank.png");
+    background-position: center;
+    background-size: cover;
 }
 
 #retry {
