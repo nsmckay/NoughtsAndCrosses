@@ -146,4 +146,26 @@ label {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
+}
+
+#mouse, #cat {
+    background-color: white;
+    padding: 10px;
+    max-height: 150px;
+    max-width: 150px;
+}
+
+#mouse {
+    background-color: red;
+}
+
+#cat {
+    background-color: lime;
+}
+
+#mouse img, #cat img {
+    max-height: 150px;
+    max-width: 150px;
+    object-fit: contain;
 }
