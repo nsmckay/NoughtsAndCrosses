@@ -130,7 +130,7 @@ label {
     background-color: black;
 }
 
-.box {
+.square {
     margin: 5px;
     background-color: white;
     background-image: url("blank.png");
@@ -152,16 +152,19 @@ label {
 #mouse, #cat {
     background-color: white;
     padding: 10px;
-    max-height: 150px;
-    max-width: 150px;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #mouse {
-    background-color: red;
+    background-color: lightgreen;
 }
 
 #cat {
-    background-color: lime;
+    background-color: lightsalmon;
 }
 
 #mouse img, #cat img {
