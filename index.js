@@ -9,8 +9,8 @@ const square6 = document.getElementById("square-6")
 const square7 = document.getElementById("square-7")
 const square8 = document.getElementById("square-8")
 const square9 = document.getElementById("square-9")
-const squaresArray = [1,2,3,4,5,6,7,8,9]
 
+const retry = document.getElementById("retry")
 const message = document.getElementById("message")
 const mouse = document.getElementById("mouse")
 const cat = document.getElementById("cat")
@@ -18,6 +18,7 @@ const cat = document.getElementById("cat")
 let player1Turn = true // player2turn when false
 let gameOver = false
 let turns = 0
+let squaresArray = [1,2,3,4,5,6,7,8,9]
 
 square1.addEventListener('click', function(){clickSquare(event,1), false})
 square2.addEventListener('click', function(){clickSquare(event,2), false})
@@ -97,66 +98,23 @@ function checkWin() {
        }
 }
 
-// Create a function that puts the apples onto the appleShelf
-// and the oranges onto the orangeShelf. Use a for loop,
-// a conditional statement, and the textContent property.
+function startOver() {
+    player1Turn = true
+    gameOver = false
+    turns = 0
+    squaresArray = [1,2,3,4,5,6,7,8,9]
 
-async function startGame() {
-    //console.log("Working!")
-    let startNumVal = parseInt(startNum.value)
-    let endNumVal = parseInt(endNum.value)
-    let fizzBuzzArray = []
-
-    for (i=startNumVal; i < endNumVal + 1; i++) {
-        let message = ""
-        if(i % 3 === 0) {
-            message += "Fizz"
-        }
-        if(i % 5 === 0) {
-            message += "Buzz"
-        }
-        if(i % 3 != 0 && i % 5 != 0) {
-            message += i
-        }
-        if (message != "") {
-            fizzBuzzArray.push(message)
-        }
+    for(let i = 1; i < 10; i++) {
+        console.log("WORKING")
+        const currentSquare = document.getElementById("square-" + i)
+        currentSquare.style.backgroundImage = "url(blank.png)"
+        currentSquare.classList.remove("nought")
+        currentSquare.classList.remove("cross")
     }
-    let fizzBuzzString = fizzBuzzArray.toString()
-    fizzBuzzString = fizzBuzzString.replace(/,/g, ", ")
-    fizzBuzzOutput.innerHTML = fizzBuzzString
-    bee.classList.add("bee-shake")
-    beeBuzz.play();
-    await wait(2000);
-    bee.classList.remove("bee-shake")
+
+    message.innerText="Player 1, place your O"
+    mouse.firstChild.src="greenMouse.png"
+    cat.firstChild.src="redCat.png"
 }
 
-function wait(timeout) {
-    return new Promise(resolve => {
-        setTimeout(resolve, timeout);
-    });
-}
-
-function validate() {
-    let startNumVal = parseInt(startNum.value)
-    let endNumVal = parseInt(endNum.value)
-    if (startNumVal > 0 && startNumVal < 101 && endNumVal > 0 && endNumVal < 101) {
-        if (startNumVal < endNumVal) {
-            startGame()
-        } else {
-            fizzBuzzOutput.innerHTML = "The starting number CANNOT be larger than the ending number!"
-        }
-    } else {
-        fizzBuzzOutput.innerHTML = "Range MUST be between 1 and 100 for both start and end points!"
-    }
-}
-
-startButton.addEventListener("click", validate)
-
-//for (i = 0; i < fruit.length; i++) {
-    //if (fruit[i] === "🍎") {
-        //appleShelf.textContent += "🍎";
-    //} else {
-        //orangeShelf.textContent += "🍊";
-    //}
-//}
+retry.addEventListener("click", startOver)

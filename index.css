@@ -1,11 +1,19 @@
 body {
     padding: 40px;
-    background: brown;
+    background: #ffae42 ;
     text-align: center;
 }
 
 h1 {
     font-size: 50px;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: lime;
 }
 
 label {
@@ -16,7 +24,7 @@ label {
 #container {
     margin:auto;
     justify-self: center;
-    background: yellow;
+    background: white;
     max-width: 80%;
     min-width: 400px;
     display: flex;
@@ -157,6 +165,7 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border: 5px solid black;
 }
 
 #mouse {
