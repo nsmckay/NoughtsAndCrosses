@@ -15,11 +15,20 @@
         <div id="container">
             <h1><span class="green">NOUGHTS</span> & <span class="red">CROSSES</span></h1>
             <p id="instructions">
-                As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you.
+                SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you.
                 Win by placing 3 of your marks in a row before the CPU does.
             </p>
             <div id="game-area">
-                <div></div>
+                <div id="options">
+                    <p>Game mode:</p>
+                    <div id="radio">
+                        <input type="radio" id="game-mode-single" name="game-mode" value="singleplayer" checked>
+                        <label for="game-mode-single">Singleplayer</label>
+                        <input type="radio" id="game-mode-multi" name="game-mode" value="multiplayer">
+                        <label for="game-mode-multi">Multiplayer</label>
+                    </div>
+                    <button id="start-game">START</button>
+                </div>
                 <div id="game-board">
                     <div class="square" id="square-1">1</div>
                     <div class="square" id="square-2">2</div>
@@ -35,7 +44,7 @@
             </div>
             <div id="messages">
                 <div id="mouse"><img src="greenMouse.png"></div>
-                <div id="message">Player 1, place your O</div>
+                <div id="message">Select a mode, and click START to begin!</div>
                 <div id="cat"><img src="redCat.png"></div>
             </div>
         </div>  
