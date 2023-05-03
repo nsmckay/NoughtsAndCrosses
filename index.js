@@ -45,7 +45,7 @@ retry.disabled = true
 
 function updateInstructions() {
     if(radioSingle.checked) {
-        instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
+        instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
     } else {
         instructions.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
     }
@@ -101,7 +101,56 @@ function clickSquare(event, num) {
 }
 
 function handleTurnSingle(num) {
+    const currentSquare = document.getElementById("square-" + num)
+    const containsNought = currentSquare.classList.contains("nought")
+    const containsCross = currentSquare.classList.contains("cross")
+    const squaresArrayIndex = squaresArray.indexOf(num)
+    if(!containsCross && !containsNought && gameStart && !gameOver) {
+        currentSquare.style.backgroundImage = "url(nought.png)"
+        currentSquare.classList.add("nought")
+        squaresArray.splice(squaresArrayIndex,1,"O")
+        player1Turn = false
+        turns++
+        checkWin()
 
+        if(!gameOver) {
+            message.innerText="The CPU is thinking..."
+            //wait 1-3 seconds
+            let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
+            let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "") // 2 marked squared followed by blank means CPU picks it
+            if(noughtIndices.includes(0) && noughtIndices.includes(1) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
+                crossIndices.includes(0) && crossIndices.includes(1) && !noughtIndices.includes(2) && !crossIndices.includes(2)) {
+                    placeCPUSquare(2)
+                } else if(noughtIndices.includes(1) && noughtIndices.includes(2) && !noughtIndices.includes(0) && !crossIndices.includes(0) ||
+                crossIndices.includes(1) && crossIndices.includes(2) && !noughtIndices.includes(0) && !crossIndices.includes(0)) {
+                    placeCPUSquare(0)
+                } else {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
+                    let r = 0
+                    for (let i = 0; i < squaresArray.length; i++) {
+                        if(squaresArray[i] != "O" && squaresArray[i] != "X") {
+                            r = i
+                        }
+                    }
+                    placeCPUSquare(r)
+                    console.log(squaresArray)
+                }
+        }
+    }
+}
+
+function placeCPUSquare(num) {
+    const CPUSquare = document.getElementById("square-" + (num + 1))
+    const CPUSquaresArrayIndex = squaresArray.indexOf(num)
+    CPUSquare.style.backgroundImage = "url(cross.png)"
+    CPUSquare.classList.add("cross")
+    squaresArray.splice(CPUSquaresArrayIndex,1,"X")
+    player1Turn = true
+    message.innerText="Player 1, place your O"
+    turns++
+    //console.log(turns)
+    checkWin()
 }
 
 function handleTurnMulti(num) {
@@ -135,7 +184,7 @@ function checkWin() {
     let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
     let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "")
     //console.log("O", noughtIndices, "X", crossIndices)
-    console.log(noughtIndices)
+    //console.log(noughtIndices)
     if(noughtIndices.includes(0) && noughtIndices.includes(1) && noughtIndices.includes(2) ||
        noughtIndices.includes(6) && noughtIndices.includes(7) && noughtIndices.includes(8) ||
        noughtIndices.includes(0) && noughtIndices.includes(4) && noughtIndices.includes(8) ||
@@ -182,7 +231,7 @@ function startOver() {
     squaresArray = [1,2,3,4,5,6,7,8,9]
 
     for(let i = 1; i < 10; i++) {
-        console.log("WORKING")
+        //console.log("WORKING")
         const currentSquare = document.getElementById("square-" + i)
         currentSquare.style.backgroundImage = "url(blank.png)"
         currentSquare.classList.remove("nought")
