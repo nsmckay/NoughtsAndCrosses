@@ -100,7 +100,7 @@ function clickSquare(event, num) {
     }
 }
 
-function handleTurnSingle(num) {
+async function handleTurnSingle(num) {
     const currentSquare = document.getElementById("square-" + num)
     const containsNought = currentSquare.classList.contains("nought")
     const containsCross = currentSquare.classList.contains("cross")
@@ -115,7 +115,7 @@ function handleTurnSingle(num) {
 
         if(!gameOver) {
             message.innerText="The CPU is thinking..."
-            //wait 1-3 seconds
+            await wait(3000); //wait 3 seconds
             let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
             let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "") // 2 marked squared 1 blank in row means CPU picks blank square
             if(noughtIndices.includes(0) && noughtIndices.includes(1) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
@@ -189,6 +189,12 @@ function handleTurnSingle(num) {
                 }
         }
     }
+}
+
+function wait(timeout) {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
 }
 
 function placeCPUSquare(num) {
