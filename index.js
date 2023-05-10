@@ -63,6 +63,7 @@ function startGame() {
     startButton.disabled = true
     retry.disabled = false
     message.innerText="Player 1, place your O"
+    instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
 }
 
 // function clickSquare(event, num) {
@@ -115,6 +116,7 @@ async function handleTurnSingle(num) {
 
         if(!gameOver) {
             message.innerText="The CPU is thinking..."
+            instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
             await wait(3000); //wait 3 seconds
             let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
             let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "") // 2 marked squared 1 blank in row means CPU picks blank square
@@ -124,29 +126,44 @@ async function handleTurnSingle(num) {
                 crossIndices.includes(5) && crossIndices.includes(8) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
                 noughtIndices.includes(4) && noughtIndices.includes(6) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
                 crossIndices.includes(4) && noughtIndices.includes(6) && !noughtIndices.includes(2) && !crossIndices.includes(2)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(2)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(1) && noughtIndices.includes(2) && !noughtIndices.includes(0) && !crossIndices.includes(0) ||
                 crossIndices.includes(1) && crossIndices.includes(2) && !noughtIndices.includes(0) && !crossIndices.includes(0) ||
                 noughtIndices.includes(3) && noughtIndices.includes(6) && !noughtIndices.includes(0) && !crossIndices.includes(0) ||
                 crossIndices.includes(3) && crossIndices.includes(6) && !noughtIndices.includes(0) && !crossIndices.includes(0) ||
                 noughtIndices.includes(4) && noughtIndices.includes(8) && !noughtIndices.includes(0) && !crossIndices.includes(0) ||
                 crossIndices.includes(4) && crossIndices.includes(8) && !noughtIndices.includes(0) && !crossIndices.includes(0)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(0)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(0) && noughtIndices.includes(2) && !noughtIndices.includes(1) && !crossIndices.includes(1) ||
                 crossIndices.includes(0) && crossIndices.includes(2) && !noughtIndices.includes(1) && !crossIndices.includes(1) ||
                 noughtIndices.includes(4) && noughtIndices.includes(7) && !noughtIndices.includes(1) && !crossIndices.includes(1) ||
                 crossIndices.includes(4) && crossIndices.includes(7) && !noughtIndices.includes(1) && !crossIndices.includes(1)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(1)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(3) && noughtIndices.includes(4) && !noughtIndices.includes(5) && !crossIndices.includes(5) ||
                 crossIndices.includes(3) && crossIndices.includes(4) && !noughtIndices.includes(5) && !crossIndices.includes(5) ||
                 noughtIndices.includes(2) && noughtIndices.includes(8) && !noughtIndices.includes(5) && !crossIndices.includes(5) ||
                 crossIndices.includes(2) && crossIndices.includes(8) && !noughtIndices.includes(5) && !crossIndices.includes(5)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(5)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(4) && noughtIndices.includes(5) && !noughtIndices.includes(3) && !crossIndices.includes(3) ||
                 crossIndices.includes(4) && crossIndices.includes(5) && !noughtIndices.includes(3) && !crossIndices.includes(3) ||
                 noughtIndices.includes(0) && noughtIndices.includes(6) && !noughtIndices.includes(3) && !crossIndices.includes(3) ||
                 crossIndices.includes(0) && crossIndices.includes(6) && !noughtIndices.includes(3) && !crossIndices.includes(3)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(3)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(3) && noughtIndices.includes(5) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
                 crossIndices.includes(3) && crossIndices.includes(5) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
                 noughtIndices.includes(1) && noughtIndices.includes(7) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
@@ -155,26 +172,38 @@ async function handleTurnSingle(num) {
                 crossIndices.includes(2) && crossIndices.includes(6) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
                 noughtIndices.includes(0) && noughtIndices.includes(8) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
                 crossIndices.includes(0) && crossIndices.includes(8) && !noughtIndices.includes(4) && !crossIndices.includes(4)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(4)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(6) && noughtIndices.includes(7) && !noughtIndices.includes(8) && !crossIndices.includes(8) ||
                 crossIndices.includes(6) && crossIndices.includes(7) && !noughtIndices.includes(8) && !crossIndices.includes(8) ||
                 noughtIndices.includes(2) && noughtIndices.includes(5) && !noughtIndices.includes(8) && !crossIndices.includes(8) ||
                 crossIndices.includes(2) && crossIndices.includes(5) && !noughtIndices.includes(8) && !crossIndices.includes(8) ||
                 noughtIndices.includes(4) && noughtIndices.includes(0) && !noughtIndices.includes(8) && !crossIndices.includes(8) ||
                 crossIndices.includes(4) && crossIndices.includes(0) && !noughtIndices.includes(8) && !crossIndices.includes(8)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(8)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(7) && noughtIndices.includes(8) && !noughtIndices.includes(6) && !crossIndices.includes(6) ||
                 crossIndices.includes(7) && crossIndices.includes(8) && !noughtIndices.includes(6) && !crossIndices.includes(6) ||
                 noughtIndices.includes(0) && noughtIndices.includes(3) && !noughtIndices.includes(6) && !crossIndices.includes(6) ||
                 crossIndices.includes(0) && crossIndices.includes(3) && !noughtIndices.includes(6) && !crossIndices.includes(6) ||
                 noughtIndices.includes(2) && noughtIndices.includes(4) && !noughtIndices.includes(6) && !crossIndices.includes(6) ||
                 crossIndices.includes(2) && crossIndices.includes(4) && !noughtIndices.includes(6) && !crossIndices.includes(6)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(6)
+                    console.log(squaresArray)
                 } else if(noughtIndices.includes(6) && noughtIndices.includes(8) && !noughtIndices.includes(7) && !crossIndices.includes(7) ||
                 crossIndices.includes(6) && crossIndices.includes(8) && !noughtIndices.includes(7) && !crossIndices.includes(7) ||
                 noughtIndices.includes(1) && noughtIndices.includes(4) && !noughtIndices.includes(7) && !crossIndices.includes(7) ||
                 crossIndices.includes(1) && crossIndices.includes(4) && !noughtIndices.includes(7) && !crossIndices.includes(7)) {
+                    console.log("CPU TURN" + turns)
+                    console.log(squaresArray)
                     placeCPUSquare(7)
+                    console.log(squaresArray)
                 } else {
                     console.log("CPU TURN" + turns)
                     console.log(squaresArray)
@@ -199,13 +228,14 @@ function wait(timeout) {
 
 function placeCPUSquare(num) {
     const CPUSquare = document.getElementById("square-" + (num + 1))
-    const CPUSquaresArrayIndex = squaresArray.indexOf(num)
+    const CPUSquaresArrayIndex = squaresArray.indexOf(num + 1)
     CPUSquare.style.backgroundImage = "url(cross.png)"
     CPUSquare.classList.add("cross")
     squaresArray.splice(CPUSquaresArrayIndex,1,"X")
     player1Turn = true
-    message.innerText="Player 1, place your O"
     turns++
+    message.innerText="Player 1, place your O"
+    instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
     //console.log(turns)
     checkWin()
 }
@@ -232,6 +262,7 @@ function handleTurnMulti(num) {
             message.innerText="Player 1, place your O"
         }
         turns++
+        instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
         console.log(turns)
         checkWin()
     }
@@ -252,6 +283,7 @@ function checkWin() {
        noughtIndices.includes(2) && noughtIndices.includes(5) && noughtIndices.includes(8)) {
         //console.log("Player 1 Wins!")
         message.innerText="Player 1 Wins!"
+        instructions.innerText="GAME SET"
         mouse.firstChild.src="greenMouseHappy.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
@@ -266,16 +298,19 @@ function checkWin() {
        crossIndices.includes(2) && crossIndices.includes(5) && crossIndices.includes(8)) {
         //console.log("Player 2 Wins!")
         message.innerText="Player 2 Wins!"
+        instructions.innerText="GAME SET"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatHappy.png"
         gameOver = true
        }
-       if (turns === 9 && gameOver === false) {
+    if (turns === 9 && gameOver === false) {
         //console.log("It's a Draw!")
         message.innerText="It's a Draw!"
+        instructions.innerText="GAME SET"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatAngry.png"
-       }
+        gameOver = true
+    }
 }
 
 function startOver() {
@@ -296,6 +331,7 @@ function startOver() {
     }
 
     message.innerText="Select a mode, and click START to begin!"
+    instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
     mouse.firstChild.src="greenMouse.png"
     cat.firstChild.src="redCat.png"
 }
