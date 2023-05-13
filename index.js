@@ -15,6 +15,8 @@ const options = document.getElementById("options")
 const radioSingle = document.getElementById("game-mode-single")
 const radioMulti = document.getElementById("game-mode-multi")
 const startButton = document.getElementById("start-game")
+const gameBoard = document.getElementById("game-board")
+const endOptions = document.getElementById("end-options")
 const retry = document.getElementById("retry")
 const message = document.getElementById("message")
 const mouse = document.getElementById("mouse")
@@ -43,6 +45,10 @@ startButton.addEventListener("click", startGame)
 retry.addEventListener("click", startOver)
 retry.disabled = true
 
+options.style.display = "inline" //before starting game, only want options visible
+gameBoard.style.display = "none"
+endOptions.style.display = "none"
+
 function updateInstructions() {
     if(radioSingle.checked) {
         instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
@@ -64,6 +70,9 @@ function startGame() {
     retry.disabled = false
     message.innerText="Player 1, place your O"
     instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
+    options.style.display = "none"
+    gameBoard.style.display = "grid" //when game starts, we want to see the grid of squares
+    endOptions.style.display = "none"
 }
 
 // function clickSquare(event, num) {
@@ -106,7 +115,7 @@ async function handleTurnSingle(num) {
     const containsNought = currentSquare.classList.contains("nought")
     const containsCross = currentSquare.classList.contains("cross")
     const squaresArrayIndex = squaresArray.indexOf(num)
-    if(!containsCross && !containsNought && gameStart && !gameOver) {
+    if(!containsCross && !containsNought && player1Turn && gameStart && !gameOver) {
         currentSquare.style.backgroundImage = "url(nought.png)"
         currentSquare.classList.add("nought")
         squaresArray.splice(squaresArrayIndex,1,"O")
@@ -268,7 +277,7 @@ function handleTurnMulti(num) {
     }
 }
 
-function checkWin() {
+async function checkWin() {
     let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
     let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "")
     //console.log("O", noughtIndices, "X", crossIndices)
@@ -287,6 +296,10 @@ function checkWin() {
         mouse.firstChild.src="greenMouseHappy.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
+        await wait(3000); //wait 3 seconds
+        options.style.display = "none"
+        gameBoard.style.display = "none"
+        endOptions.style.display = "inline" //when game ends, want option to start over
        }
     if(crossIndices.includes(0) && crossIndices.includes(1) && crossIndices.includes(2) ||
        crossIndices.includes(6) && crossIndices.includes(7) && crossIndices.includes(8) ||
@@ -302,6 +315,10 @@ function checkWin() {
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatHappy.png"
         gameOver = true
+        await wait(3000); //wait 3 seconds
+        options.style.display = "none"
+        gameBoard.style.display = "none"
+        endOptions.style.display = "inline"
        }
     if (turns === 9 && gameOver === false) {
         //console.log("It's a Draw!")
@@ -310,6 +327,10 @@ function checkWin() {
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
+        await wait(3000); //wait 3 seconds
+        options.style.display = "none"
+        gameBoard.style.display = "none"
+        endOptions.style.display = "inline"
     }
 }
 
@@ -334,4 +355,7 @@ function startOver() {
     instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
     mouse.firstChild.src="greenMouse.png"
     cat.firstChild.src="redCat.png"
+    options.style.display = "inline" //before starting game, only want options visible
+    gameBoard.style.display = "none"
+    endOptions.style.display = "none"
 }

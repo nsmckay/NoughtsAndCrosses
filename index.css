@@ -6,6 +6,7 @@ body {
 
 h1 {
     font-size: 50px;
+    margin-bottom: 20px;
 }
 
 .red {
@@ -115,7 +116,12 @@ label {
 }
 
 #instructions {
+    margin-left: 10%;
+    margin-right: 10%;
     margin-bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #fdfd96;
 }
 
 #game-area {
@@ -127,13 +133,52 @@ label {
     margin-bottom: 30px;
 }
 
+#options, #end-options {
+    background-color: #fdfd96;
+    padding: 10px;
+}
+
+#start-game, #retry {
+    margin: 10px;
+    height: 30px;
+    width: 90px;
+    border: 3px solid black;
+    font-weight: bold;
+}
+
+#start-game {
+    background-color: lime;
+}
+
+#start-game:hover {
+    color: lime;
+    background-color: white;
+    cursor: pointer;
+}
+
+#retry {
+    background-color: red;
+    width: 120px;
+}
+
+#retry:hover {
+    color: red;
+    background-color: white;
+    cursor: pointer;
+}
+
+#start-game:disabled, #retry:disabled {
+    color: gray;
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
 #game-board {
     display: grid;
-    grid-template-columns: 150px 150px 150px;
-    grid-auto-rows: 150px;
-    width: 450px;
+    grid-template-columns: 100px 100px 100px;
+    grid-auto-rows: 100px;
+    width: 300px;
     margin: auto;
-    margin-right: 50px;
     background-color: black;
 }
 
@@ -150,17 +195,27 @@ label {
 }
 
 #messages {
+    margin: 30px;
+    margin-top: 0px;
+    margin-left: 10%;
+    margin-right: 10%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    background-color: #fdfd96;
+}
+
+#message {
+    font-size: 20px;
 }
 
 #mouse, #cat {
     background-color: white;
+    margin: 30px;
     padding: 10px;
-    height: 150px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
