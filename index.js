@@ -1,5 +1,11 @@
 const flipSquare = document.getElementById("flip-square")
 const clickButton = document.getElementById("click-button")
+const startJingle = document.getElementById("start-jingle")
+const winGong = document.getElementById("win-gong")
+const drawGong = document.getElementById("draw-gong")
+const p1WinSound = document.getElementById("p1-win-sound")
+const p2WinSound = document.getElementById("p2-win-sound")
+const restartGong = document.getElementById("restart-gong")
 
 const square1 = document.getElementById("square-1")
 const square2 = document.getElementById("square-2")
@@ -85,6 +91,7 @@ function startGame() {
         //console.log("MULTIPLAYER!")
         singlePlayer = false
     }
+    startJingle.play()
     gameStart = true
     startButton.disabled = true
     retry.disabled = false
@@ -95,33 +102,6 @@ function startGame() {
     gameBoard.style.display = "grid" //when game starts, we want to see the grid of squares
     endOptions.style.display = "none"
 }
-
-// function clickSquare(event, num) {
-//     const currentSquare = document.getElementById("square-" + num)
-//     //console.log(currentSquare)
-//     const containsNought = currentSquare.classList.contains("nought")
-//     const containsCross = currentSquare.classList.contains("cross")
-//     const squaresArrayIndex = squaresArray.indexOf(num)
-//     if(!containsCross && !containsNought && gameStart && !gameOver) {
-//         flipSquare.play()
-//         if(player1Turn) {
-//             currentSquare.style.backgroundImage = "url(nought.png)"
-//             currentSquare.classList.add("nought")
-//             squaresArray.splice(squaresArrayIndex,1,"O")
-//             player1Turn = false
-//             message.innerText="Player 2, place your X"
-//         } else { //if player2Turn
-//             currentSquare.style.backgroundImage = "url(cross.png)"
-//             currentSquare.classList.add("cross")
-//             squaresArray.splice(squaresArrayIndex,1,"X")
-//             player1Turn = true
-//             message.innerText="Player 1, place your O"
-//         }
-//         turns++
-//         console.log(turns)
-//         checkWin()
-//     }
-// }
 
 function clickSquare(event, num) {
     if (singlePlayer) {
@@ -323,6 +303,11 @@ async function checkWin() {
         mouse.firstChild.src="greenMouseHappy.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
+        if (singlePlayer) {
+            p1WinSound.play()
+        } else {
+            winGong.play()
+        }
         await wait(3000); //wait 3 seconds
         options.style.display = "none"
         gameBoard.style.display = "none"
@@ -343,6 +328,11 @@ async function checkWin() {
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatHappy.png"
         gameOver = true
+        if (singlePlayer) {
+            p2WinSound.play()
+        } else {
+            winGong.play()
+        }
         await wait(3000); //wait 3 seconds
         options.style.display = "none"
         gameBoard.style.display = "none"
@@ -356,6 +346,7 @@ async function checkWin() {
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
+        drawGong.play()
         await wait(3000); //wait 3 seconds
         options.style.display = "none"
         gameBoard.style.display = "none"
@@ -364,6 +355,7 @@ async function checkWin() {
 }
 
 function startOver() {
+    restartGong.play()
     player1Turn = true
     gameStart = false
     gameOver = false
@@ -389,3 +381,10 @@ function startOver() {
     gameBoard.style.display = "none"
     endOptions.style.display = "none"
 }
+
+//Special thanks to NoirNerd, whose 100% free noughts and crosses tutorial on youtube/github I applied to some of my own code for the game board logic.
+//youtube: https://www.youtube.com/watch?v=1Py78eFL3YQ
+//github: https://github.com/drnoir/noughtandcrosses-vanillajs
+
+//The Singleplayer AI opponent was entirely my own making however,
+//as was the responsive design, and idea to include animated characters and sound effects for some extra personality.
