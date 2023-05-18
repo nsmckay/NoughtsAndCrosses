@@ -2,11 +2,13 @@ body {
     padding: 40px;
     background: #ffae42 ;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 60px;
     margin-bottom: 20px;
+    font-family: 'Lakki Reddy', cursive;
 }
 
 .red {
@@ -24,7 +26,7 @@ label {
 #container {
     margin:auto;
     justify-self: center;
-    background: white;
+    background: lightgoldenrodyellow;
     max-width: 80%;
     min-width: 400px;
     display: flex;
@@ -115,13 +117,34 @@ label {
   100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
 
-#instructions {
+#info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#instructions, #mobile-instructions {
     margin-left: 10%;
     margin-right: 10%;
     margin-bottom: 0;
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #fdfd96;
+}
+
+#mobile-instructions-button {
+    margin: 10px;
+    height: 30px;
+    width: 90px;
+    border: 3px solid black;
+    font-weight: bold;
+    background-color: orange;
+}
+
+#mobile-instructions-button:hover {
+    color: orange;
+    background-color: white;
+    cursor: pointer;
 }
 
 #game-area {
@@ -208,6 +231,7 @@ label {
 
 #message {
     font-size: 20px;
+    font-weight: bold;
 }
 
 #mouse, #cat {
@@ -235,3 +259,76 @@ label {
     max-width: 150px;
     object-fit: contain;
 }
+
+@media screen and (min-width: 600px){
+    #mobile-instructions {
+        display: none;
+    }
+    #mobile-instructions-button {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    h1 {
+        font-size: 50px;
+    }
+    #instructions, #mobile-instructions {
+        font-size: 14px;
+    }
+    #mobile-instructions {
+        display: none;
+    }
+    #game-board {
+        grid-template-columns: 90px 90px 90px;
+        grid-auto-rows: 90px;
+        width: 270px;
+    }
+    #messages {
+        flex-wrap: wrap;
+    }
+    #message {
+        font-size: 18px;
+        order: 1;
+        width: 100%;
+    }
+    #mouse, #cat{
+        height: 80px;
+        width: 80px;
+        order: 2;
+    }
+    #mouse img, #cat img {
+        max-height: 100px;
+        max-width: 100px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    h1 {
+        font-size: 45px;
+    }
+    #instructions, #mobile-instructions {
+        font-size: 12px;
+    }
+    #instructions {
+        display: none;
+    }
+    #game-board {
+        grid-template-columns: 80px 80px 80px;
+        grid-auto-rows: 80px;
+        width: 240px;
+    }
+    #message {
+        font-size: 16px;
+        padding: 10px;
+        padding-bottom: 0px;
+    }
+    #mouse, #cat{
+        height: 60px;
+        width: 60px;
+    }
+    #mouse img, #cat img {
+        max-height: 80px;
+        max-width: 80px;
+    }
+  }

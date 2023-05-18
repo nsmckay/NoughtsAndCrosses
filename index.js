@@ -1,4 +1,5 @@
 const flipSquare = document.getElementById("flip-square")
+const clickButton = document.getElementById("click-button")
 
 const square1 = document.getElementById("square-1")
 const square2 = document.getElementById("square-2")
@@ -11,6 +12,8 @@ const square8 = document.getElementById("square-8")
 const square9 = document.getElementById("square-9")
 
 const instructions = document.getElementById("instructions")
+const mobileInfo = document.getElementById("mobile-instructions")
+const mobileInfoButton = document.getElementById("mobile-instructions-button")
 const options = document.getElementById("options")
 const radioSingle = document.getElementById("game-mode-single")
 const radioMulti = document.getElementById("game-mode-multi")
@@ -22,6 +25,7 @@ const message = document.getElementById("message")
 const mouse = document.getElementById("mouse")
 const cat = document.getElementById("cat")
 
+let mobileInfoVisible = false
 let singlePlayer = true // multiplayer when false
 let gameStart = false
 let player1Turn = true // player2turn when false
@@ -39,21 +43,37 @@ square7.addEventListener('click', function(){clickSquare(event,7), false})
 square8.addEventListener('click', function(){clickSquare(event,8), false})
 square9.addEventListener('click', function(){clickSquare(event,9), false})
 
+mobileInfoButton.addEventListener("click", displayMobileInstructions)
 radioSingle.addEventListener("click", updateInstructions)
 radioMulti.addEventListener("click", updateInstructions)
 startButton.addEventListener("click", startGame)
 retry.addEventListener("click", startOver)
 retry.disabled = true
 
+mobileInfo.style.display = "none"
 options.style.display = "inline" //before starting game, only want options visible
 gameBoard.style.display = "none"
 endOptions.style.display = "none"
 
+function displayMobileInstructions() {
+    clickButton.play()
+    if (!mobileInfoVisible) {
+        mobileInfo.style.display = "inline"
+        mobileInfoVisible = true
+    } else {
+        mobileInfo.style.display = "none"
+        mobileInfoVisible = false
+    }
+}
+
 function updateInstructions() {
+    clickButton.play()
     if(radioSingle.checked) {
         instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
+        mobileInfo.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
     } else {
         instructions.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
+        mobileInfo.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
     }
 }
 
@@ -70,6 +90,7 @@ function startGame() {
     retry.disabled = false
     message.innerText="Player 1, place your O"
     instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
+    mobileInfo.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
     options.style.display = "none"
     gameBoard.style.display = "grid" //when game starts, we want to see the grid of squares
     endOptions.style.display = "none"
@@ -116,6 +137,7 @@ async function handleTurnSingle(num) {
     const containsCross = currentSquare.classList.contains("cross")
     const squaresArrayIndex = squaresArray.indexOf(num)
     if(!containsCross && !containsNought && player1Turn && gameStart && !gameOver) {
+        flipSquare.play()
         currentSquare.style.backgroundImage = "url(nought.png)"
         currentSquare.classList.add("nought")
         squaresArray.splice(squaresArrayIndex,1,"O")
@@ -126,6 +148,7 @@ async function handleTurnSingle(num) {
         if(!gameOver) {
             message.innerText="The CPU is thinking..."
             instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
+            mobileInfo.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
             await wait(3000); //wait 3 seconds
             let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
             let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "") // 2 marked squared 1 blank in row means CPU picks blank square
@@ -240,11 +263,13 @@ function placeCPUSquare(num) {
     const CPUSquaresArrayIndex = squaresArray.indexOf(num + 1)
     CPUSquare.style.backgroundImage = "url(cross.png)"
     CPUSquare.classList.add("cross")
+    flipSquare.play()
     squaresArray.splice(CPUSquaresArrayIndex,1,"X")
     player1Turn = true
     turns++
     message.innerText="Player 1, place your O"
     instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
+    mobileInfo.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
     //console.log(turns)
     checkWin()
 }
@@ -272,6 +297,7 @@ function handleTurnMulti(num) {
         }
         turns++
         instructions.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
+        mobileInfo.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
         console.log(turns)
         checkWin()
     }
@@ -293,6 +319,7 @@ async function checkWin() {
         //console.log("Player 1 Wins!")
         message.innerText="Player 1 Wins!"
         instructions.innerText="GAME SET"
+        mobileInfo.innerText="GAME SET"
         mouse.firstChild.src="greenMouseHappy.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
@@ -312,6 +339,7 @@ async function checkWin() {
         //console.log("Player 2 Wins!")
         message.innerText="Player 2 Wins!"
         instructions.innerText="GAME SET"
+        mobileInfo.innerText="GAME SET"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatHappy.png"
         gameOver = true
@@ -324,6 +352,7 @@ async function checkWin() {
         //console.log("It's a Draw!")
         message.innerText="It's a Draw!"
         instructions.innerText="GAME SET"
+        mobileInfo.innerText="GAME SET"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
@@ -353,6 +382,7 @@ function startOver() {
 
     message.innerText="Select a mode, and click START to begin!"
     instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
+    mobileInfo.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
     mouse.firstChild.src="greenMouse.png"
     cat.firstChild.src="redCat.png"
     options.style.display = "inline" //before starting game, only want options visible

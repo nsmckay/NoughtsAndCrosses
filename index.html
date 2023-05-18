@@ -2,6 +2,9 @@
     <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
         <link rel="stylesheet" href="index.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap" rel="stylesheet">
         <title>Noughts and Crosses</title>
     </head>
     <body>
@@ -14,13 +17,20 @@
 
         <div id="container">
             <h1><span class="green">NOUGHTS</span> & <span class="red">CROSSES</span></h1>
-            <p id="instructions">
-                SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you.
-                Win by placing 3 of your marks in a row before the CPU does.
-            </p>
+            <div id="info">
+                <p id="instructions">
+                    SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you.
+                    Win by placing 3 of your marks in a row before the CPU does.
+                </p>
+                <button id="mobile-instructions-button">?</button>
+                <p id="mobile-instructions">
+                    SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you.
+                    Win by placing 3 of your marks in a row before the CPU does.
+                </p>
+            </div>
             <div id="game-area">
                 <div id="options">
-                    <p>Game mode:</p>
+                    <p><b>Game mode:</b></p>
                     <div id="radio">
                         <input type="radio" id="game-mode-single" name="game-mode" value="singleplayer" checked>
                         <label for="game-mode-single">Singleplayer</label>
