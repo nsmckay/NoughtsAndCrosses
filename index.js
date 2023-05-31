@@ -137,7 +137,7 @@ async function handleTurnSingle(num) {
                 noughtIndices.includes(5) && noughtIndices.includes(8) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
                 crossIndices.includes(5) && crossIndices.includes(8) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
                 noughtIndices.includes(4) && noughtIndices.includes(6) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
-                crossIndices.includes(4) && noughtIndices.includes(6) && !noughtIndices.includes(2) && !crossIndices.includes(2)) {
+                crossIndices.includes(4) && crossIndices.includes(6) && !noughtIndices.includes(2) && !crossIndices.includes(2)) {
                     console.log("CPU TURN" + turns)
                     console.log(squaresArray)
                     placeCPUSquare(2)
@@ -183,10 +183,11 @@ async function handleTurnSingle(num) {
                 noughtIndices.includes(2) && noughtIndices.includes(6) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
                 crossIndices.includes(2) && crossIndices.includes(6) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
                 noughtIndices.includes(0) && noughtIndices.includes(8) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
-                crossIndices.includes(0) && crossIndices.includes(8) && !noughtIndices.includes(4) && !crossIndices.includes(4)) {
+                crossIndices.includes(0) && crossIndices.includes(8) && !noughtIndices.includes(4) && !crossIndices.includes(4) ||
+                turns === 1 && !noughtIndices.includes(4) && !crossIndices.includes(4)) { //on first CPU turn, should pick centre if empty
                     console.log("CPU TURN" + turns)
                     console.log(squaresArray)
-                    placeCPUSquare(4)
+                    placeCPUSquare(4) //this is the centre square
                     console.log(squaresArray)
                 } else if(noughtIndices.includes(6) && noughtIndices.includes(7) && !noughtIndices.includes(8) && !crossIndices.includes(8) ||
                 crossIndices.includes(6) && crossIndices.includes(7) && !noughtIndices.includes(8) && !crossIndices.includes(8) ||
@@ -219,13 +220,14 @@ async function handleTurnSingle(num) {
                 } else {
                     console.log("CPU TURN" + turns)
                     console.log(squaresArray)
-                    let r = 0
-                    for (let i = 0; i < squaresArray.length; i++) {
-                        if(squaresArray[i] != "O" && squaresArray[i] != "X") {
-                            r = i
-                        }
-                    }
-                    placeCPUSquare(r)
+                    // let r = 0
+                    // for (let i = 0; i < squaresArray.length; i++) {
+                    //     if(squaresArray[i] != "O" && squaresArray[i] != "X") {
+                    //         r = i
+                    //     }
+                    // }
+                    // placeCPUSquare(r)
+                    placeRandomSquare()
                     console.log(squaresArray)
                 }
         }
@@ -252,6 +254,25 @@ function placeCPUSquare(num) {
     mobileInfo.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
     //console.log(turns)
     checkWin()
+}
+
+function placeRandomSquare() {
+    //const r = Math.floor(Math.random() * 9) + 1
+    const r = Math.floor(Math.random() * 8) + 0
+    console.log(r)
+    let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
+    let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "")
+
+    if (noughtIndices.includes(r) || crossIndices.includes(r)) {
+        placeRandomSquare()
+    } else {
+        placeCPUSquare(r)
+    }
+    // if (squaresArray[r] != "O" && squaresArray[r] != "X") {
+    //     placeCPUSquare(r)
+    // } else {
+    //     placeRandomSquare()
+    // }
 }
 
 function handleTurnMulti(num) {
