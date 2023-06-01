@@ -55,6 +55,10 @@
                         <input type="radio" id="game-mode-multi" name="game-mode" value="multiplayer">
                         <label for="game-mode-multi">Multiplayer</label>
                     </div>
+                    <div id="difficulty-option">
+                        <label for="difficulty-slider">Difficulty</label>
+                        <input type="range" id="difficulty-slider" name="difficulty-slider" min="0" max="10" step="1" value="9">
+                    </div>
                     <button id="start-game">START</button>
                 </div>
                 <div id="game-board">
@@ -73,9 +77,15 @@
                 </div>
             </div>
             <div id="messages">
-                <div id="mouse"><img src="greenMouse.png"></div>
+                <div id="p1-msg">
+                    <p id="p1-score">0</p>
+                    <div id="mouse"><img src="greenMouse.png"></div>
+                </div>
                 <div id="message">Select a mode, and click START to begin!</div>
-                <div id="cat"><img src="redCat.png"></div>
+                <div id="p2-msg">
+                    <p id="p2-score">0</p>
+                    <div id="cat"><img src="redCat.png"></div>
+                </div>
             </div>
         </div>  
     </body>

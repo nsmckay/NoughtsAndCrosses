@@ -23,18 +23,24 @@ const mobileInfoButton = document.getElementById("mobile-instructions-button")
 const options = document.getElementById("options")
 const radioSingle = document.getElementById("game-mode-single")
 const radioMulti = document.getElementById("game-mode-multi")
+const difficultySlider = document.getElementById("difficulty-slider")
 const startButton = document.getElementById("start-game")
 const gameBoard = document.getElementById("game-board")
 const endOptions = document.getElementById("end-options")
 const retry = document.getElementById("retry")
 const message = document.getElementById("message")
+const p1ScoreBoard = document.getElementById("p1-score")
+const p2ScoreBoard = document.getElementById("p2-score")
 const mouse = document.getElementById("mouse")
 const cat = document.getElementById("cat")
 
 let mobileInfoVisible = false
 let singlePlayer = true // multiplayer when false
+let difficulty = 9 //default difficulty
 let gameStart = false
 let player1Turn = true // player2turn when false
+let player1Score = 0
+let player2Score = 0
 let gameOver = false
 let turns = 0
 let squaresArray = [1,2,3,4,5,6,7,8,9]
@@ -52,6 +58,7 @@ square9.addEventListener('click', function(){clickSquare(event,9), false})
 mobileInfoButton.addEventListener("click", displayMobileInstructions)
 radioSingle.addEventListener("click", updateInstructions)
 radioMulti.addEventListener("click", updateInstructions)
+difficultySlider.addEventListener("change", updateDifficulty)
 startButton.addEventListener("click", startGame)
 retry.addEventListener("click", startOver)
 retry.disabled = true
@@ -81,6 +88,11 @@ function updateInstructions() {
         instructions.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
         mobileInfo.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
     }
+}
+
+function updateDifficulty() {
+    difficulty = difficultySlider.value
+    //console.log(difficulty)
 }
 
 function startGame() {
@@ -132,7 +144,15 @@ async function handleTurnSingle(num) {
             await wait(3000); //wait 3 seconds
             let noughtIndices = squaresArray.map((e,i) => e==="O" ? i : "")
             let crossIndices = squaresArray.map((e,i) => e==="X" ? i : "") // 2 marked squared 1 blank in row means CPU picks blank square
-            if(noughtIndices.includes(0) && noughtIndices.includes(1) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
+            let r = Math.floor(Math.random() * difficulty) + 0
+            if(r === 0) {
+                console.log("random move")
+                if (difficulty != 10) {
+                    placeRandomSquare()
+                }
+            } else {
+                console.log("correct move")
+                if(noughtIndices.includes(0) && noughtIndices.includes(1) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
                 crossIndices.includes(0) && crossIndices.includes(1) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
                 noughtIndices.includes(5) && noughtIndices.includes(8) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
                 crossIndices.includes(5) && crossIndices.includes(8) && !noughtIndices.includes(2) && !crossIndices.includes(2) ||
@@ -230,6 +250,7 @@ async function handleTurnSingle(num) {
                     placeRandomSquare()
                     console.log(squaresArray)
                 }
+            }
         }
     }
 }
@@ -323,6 +344,7 @@ async function checkWin() {
         mobileInfo.innerText="GAME SET"
         mouse.firstChild.src="greenMouseHappy.png"
         cat.firstChild.src="redCatAngry.png"
+        updateScore(1)
         gameOver = true
         if (singlePlayer) {
             p1WinSound.play()
@@ -348,6 +370,7 @@ async function checkWin() {
         mobileInfo.innerText="GAME SET"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatHappy.png"
+        updateScore(2)
         gameOver = true
         if (singlePlayer) {
             p2WinSound.play()
@@ -372,6 +395,16 @@ async function checkWin() {
         options.style.display = "none"
         gameBoard.style.display = "none"
         endOptions.style.display = "inline"
+    }
+}
+
+function updateScore(player) {
+    if(player === 1) {
+        player1Score++
+        p1ScoreBoard.innerText=player1Score
+    } else {
+        player2Score++
+        p2ScoreBoard.innerText=player2Score
     }
 }
 
