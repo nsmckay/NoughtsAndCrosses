@@ -35,6 +35,12 @@ label {
 
 #info {
     display: flex;
+    flex-direction: row;
+    align-self: center;
+}
+
+#info-container {
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -77,7 +83,7 @@ label {
     padding: 10px;
 }
 
-#start-game, #retry {
+#start-game, #retry, #mini-retry {
     margin: 10px;
     height: 30px;
     width: 90px;
@@ -95,12 +101,12 @@ label {
     cursor: pointer;
 }
 
-#retry {
+#retry, #retry-mini {
     background-color: red;
     width: 120px;
 }
 
-#retry:hover {
+#retry:hover, #retry-mini:hover {
     color: red;
     background-color: white;
     cursor: pointer;
@@ -129,8 +135,13 @@ label {
     background-size: cover;
 }
 
-#retry {
+#retry, #retry-mini {
     height: 30px;
+}
+
+#retry-mini {
+    margin-top: 10px;
+    width: 30px;
 }
 
 #messages {
@@ -182,6 +193,12 @@ label {
     }
     #mobile-instructions-button {
         display: none;
+    }
+    #retry-mini {
+        margin-top: 20px;
+    }
+    #info-container {
+        min-width: 250px;
     }
 }
 

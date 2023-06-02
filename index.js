@@ -20,6 +20,7 @@ const square9 = document.getElementById("square-9")
 const instructions = document.getElementById("instructions")
 const mobileInfo = document.getElementById("mobile-instructions")
 const mobileInfoButton = document.getElementById("mobile-instructions-button")
+const miniRetry = document.getElementById("retry-mini")
 const options = document.getElementById("options")
 const radioSingle = document.getElementById("game-mode-single")
 const radioMulti = document.getElementById("game-mode-multi")
@@ -62,8 +63,10 @@ difficultySlider.addEventListener("change", updateDifficulty)
 startButton.addEventListener("click", startGame)
 retry.addEventListener("click", startOver)
 retry.disabled = true
+miniRetry.addEventListener("click", startOver)
 
 mobileInfo.style.display = "none"
+miniRetry.style.display = "none"
 options.style.display = "inline" //before starting game, only want options visible
 gameBoard.style.display = "none"
 endOptions.style.display = "none"
@@ -112,6 +115,7 @@ function startGame() {
     mobileInfo.innerText="TURN-" + (turns + 1) + " : Player " + (player1Turn ? "1" : "2")
     options.style.display = "none"
     gameBoard.style.display = "grid" //when game starts, we want to see the grid of squares
+    miniRetry.style.display = "inline" //small retry button for quitting during game
     endOptions.style.display = "none"
 }
 
@@ -342,6 +346,7 @@ async function checkWin() {
         message.innerText="Player 1 Wins!"
         instructions.innerText="GAME SET"
         mobileInfo.innerText="GAME SET"
+        miniRetry.style.display = "none"
         mouse.firstChild.src="greenMouseHappy.png"
         cat.firstChild.src="redCatAngry.png"
         updateScore(1)
@@ -354,6 +359,7 @@ async function checkWin() {
         await wait(3000); //wait 3 seconds
         options.style.display = "none"
         gameBoard.style.display = "none"
+        miniRetry.style.display = "none"
         endOptions.style.display = "inline" //when game ends, want option to start over
        }
     if(crossIndices.includes(0) && crossIndices.includes(1) && crossIndices.includes(2) ||
@@ -368,6 +374,7 @@ async function checkWin() {
         message.innerText="Player 2 Wins!"
         instructions.innerText="GAME SET"
         mobileInfo.innerText="GAME SET"
+        miniRetry.style.display = "none"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatHappy.png"
         updateScore(2)
@@ -380,6 +387,7 @@ async function checkWin() {
         await wait(3000); //wait 3 seconds
         options.style.display = "none"
         gameBoard.style.display = "none"
+        miniRetry.style.display = "none"
         endOptions.style.display = "inline"
        }
     if (turns === 9 && gameOver === false) {
@@ -387,6 +395,7 @@ async function checkWin() {
         message.innerText="It's a Draw!"
         instructions.innerText="GAME SET"
         mobileInfo.innerText="GAME SET"
+        miniRetry.style.display = "none"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatAngry.png"
         gameOver = true
@@ -394,6 +403,7 @@ async function checkWin() {
         await wait(3000); //wait 3 seconds
         options.style.display = "none"
         gameBoard.style.display = "none"
+        miniRetry.style.display = "none"
         endOptions.style.display = "inline"
     }
 }
@@ -433,6 +443,7 @@ function startOver() {
     cat.firstChild.src="redCat.png"
     options.style.display = "inline" //before starting game, only want options visible
     gameBoard.style.display = "none"
+    miniRetry.style.display = "none"
     endOptions.style.display = "none"
 }
 
