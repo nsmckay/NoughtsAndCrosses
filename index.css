@@ -1,5 +1,6 @@
 body {
     padding: 40px;
+    margin: none;
     background: #ffae42 ;
     background-image: url("OXODark.png");
     text-align: center;
