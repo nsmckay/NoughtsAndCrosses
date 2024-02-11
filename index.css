@@ -129,7 +129,7 @@ button:active {
     margin-top: 10px;
 }
 
-#start-game, #retry, #retry-mini {
+#start-game, #retry, #retry-mini, #continue, #continue-mini {
     margin: 10px;
     height: 30px;
     width: 90px;
@@ -179,7 +179,28 @@ button:active {
     border-color: red;
 }
 
-#start-game:disabled, #retry:disabled {
+#continue, #continue-mini {
+    background-color: lime;
+    background-image: linear-gradient(to bottom right, lime, darkgreen);
+    width: 120px;
+}
+
+#continue:hover, #continue-mini:hover {
+    color: lime;
+    background-color: white;
+    background-image: none;
+    cursor: pointer;
+}
+
+#continue:active, #continue-mini:active {
+    color: lime;
+    background-color: black;
+    background-image: none;
+    cursor: pointer;
+    border-color: lime;
+}
+
+#start-game:disabled, #retry:disabled, #continue:disabled {
     color: gray;
     background-color: lightgray;
     cursor: not-allowed;
@@ -202,11 +223,11 @@ button:active {
     background-size: cover;
 }
 
-#retry, #retry-mini {
+#retry, #retry-mini, #continue, #continue-mini {
     height: 30px;
 }
 
-#retry-mini {
+#retry-mini, #continue-mini {
     margin-top: 10px;
     width: 30px;
     border-radius: 5px;
@@ -277,6 +298,9 @@ button:active {
         display: none;
     }
     #retry-mini {
+        margin-top: 20px;
+    }
+    #continue-mini {
         margin-top: 20px;
     }
     #info-container {

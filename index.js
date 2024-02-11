@@ -25,10 +25,12 @@ const options = document.getElementById("options")
 const radioSingle = document.getElementById("game-mode-single")
 const radioMulti = document.getElementById("game-mode-multi")
 const difficultySlider = document.getElementById("difficulty-slider")
+const goalInput = document.getElementById("goal-to-reach")
 const startButton = document.getElementById("start-game")
 const gameBoard = document.getElementById("game-board")
 const endOptions = document.getElementById("end-options")
 const retry = document.getElementById("retry")
+const continueG = document.getElementById("continue")
 const message = document.getElementById("message")
 const p1ScoreBoard = document.getElementById("p1-score")
 const p2ScoreBoard = document.getElementById("p2-score")
@@ -44,6 +46,7 @@ let player1Score = 0
 let player2Score = 0
 let gameOver = false
 let turns = 0
+let goal = 0
 let squaresArray = [1,2,3,4,5,6,7,8,9]
 
 square1.addEventListener('click', function(){clickSquare(event,1), false})
@@ -60,10 +63,12 @@ mobileInfoButton.addEventListener("click", displayMobileInstructions)
 radioSingle.addEventListener("click", updateInstructions)
 radioMulti.addEventListener("click", updateInstructions)
 difficultySlider.addEventListener("change", updateDifficulty)
+goalInput.addEventListener("change", updateGoal)
 startButton.addEventListener("click", startGame)
 retry.addEventListener("click", startOver)
 retry.disabled = true
 miniRetry.addEventListener("click", startOver)
+continueG.addEventListener("click", continueGame)
 
 mobileInfo.style.display = "none"
 miniRetry.style.display = "none"
@@ -87,15 +92,22 @@ function updateInstructions() {
     if(radioSingle.checked) {
         instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
         mobileInfo.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
+        difficultySlider.disabled = false
     } else {
         instructions.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
         mobileInfo.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
+        difficultySlider.disabled = true
     }
 }
 
 function updateDifficulty() {
     difficulty = difficultySlider.value
     //console.log(difficulty)
+}
+
+function updateGoal() {
+    goal = goalInput.value
+    console.log(goal)
 }
 
 function startGame() {
@@ -117,6 +129,32 @@ function startGame() {
     gameBoard.style.display = "grid" //when game starts, we want to see the grid of squares
     miniRetry.style.display = "inline" //small retry button for quitting during game
     endOptions.style.display = "none"
+}
+
+function continueGame() {
+    player1Turn = true
+    gameStart = false
+    gameOver = false
+    retry.disabled = true
+    startButton.disabled = false
+    turns = 0
+    squaresArray = [1,2,3,4,5,6,7,8,9]
+
+    for(let i = 1; i < 10; i++) {
+        //console.log("WORKING")
+        const currentSquare = document.getElementById("square-" + i)
+        currentSquare.style.backgroundImage = "url(blank.png)"
+        currentSquare.classList.remove("nought")
+        currentSquare.classList.remove("cross")
+    }
+
+    mouse.firstChild.src="greenMouse.png"
+    cat.firstChild.src="redCat.png"
+    options.style.display = "inline" //before starting game, only want options visible
+    gameBoard.style.display = "none"
+    miniRetry.style.display = "none"
+    endOptions.style.display = "none"
+    startGame()
 }
 
 function clickSquare(event, num) {
@@ -343,14 +381,40 @@ async function checkWin() {
        noughtIndices.includes(0) && noughtIndices.includes(3) && noughtIndices.includes(6) ||
        noughtIndices.includes(2) && noughtIndices.includes(5) && noughtIndices.includes(8)) {
         //console.log("Player 1 Wins!")
-        message.innerText="Player 1 Wins!"
-        instructions.innerText="GAME SET"
-        mobileInfo.innerText="GAME SET"
+        message.innerText="Player 1 wins this round!"
+        instructions.innerText="END OF ROUND"
+        mobileInfo.innerText="END OF ROUND"
         miniRetry.style.display = "none"
         mouse.firstChild.src="greenMouseHappy.png"
         cat.firstChild.src="redCatAngry.png"
         updateScore(1)
         gameOver = true
+        //console.log(player1Score)
+        //console.log(typeof(player1Score))
+        //console.log(goal)
+        //console.log(typeof(goal))
+        if(player1Score === parseInt(goal)) {
+            //console.log("Player 1 Wins!")
+            message.innerText="Congrats Player 1, you win the game!"
+            instructions.innerText="GAME OVER"
+            mobileInfo.innerText="GAME OVER"
+            miniRetry.style.display = "none"
+            mouse.firstChild.src="greenMouseHappy.png"
+            cat.firstChild.src="redCatAngry.png"
+            gameOver = true
+            if (singlePlayer) {
+                p1WinSound.play()
+            } else {
+                winGong.play()
+            }
+            await wait(3000); //wait 3 seconds
+            options.style.display = "none"
+            gameBoard.style.display = "none"
+            miniRetry.style.display = "none"
+            endOptions.style.display = "inline" //when game ends, want option to start over
+            continueG.style.display = "none"
+            return
+        }
         if (singlePlayer) {
             p1WinSound.play()
         } else {
@@ -371,14 +435,36 @@ async function checkWin() {
        crossIndices.includes(0) && crossIndices.includes(3) && crossIndices.includes(6) ||
        crossIndices.includes(2) && crossIndices.includes(5) && crossIndices.includes(8)) {
         //console.log("Player 2 Wins!")
-        message.innerText="Player 2 Wins!"
-        instructions.innerText="GAME SET"
-        mobileInfo.innerText="GAME SET"
+        message.innerText="Player 2 wins this round!"
+        instructions.innerText="END OF ROUND"
+        mobileInfo.innerText="END OF ROUND"
         miniRetry.style.display = "none"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatHappy.png"
         updateScore(2)
         gameOver = true
+        if(player2Score === parseInt(goal)) {
+            //console.log("Player 2 Wins!")
+            message.innerText="Congrats Player 2, you win the game!"
+            instructions.innerText="GAME OVER"
+            mobileInfo.innerText="GAME OVER"
+            miniRetry.style.display = "none"
+            mouse.firstChild.src="greenMouseSad.png"
+            cat.firstChild.src="redCatHappy.png"
+            gameOver = true
+            if (singlePlayer) {
+                p2WinSound.play()
+            } else {
+                winGong.play()
+            }
+            await wait(3000); //wait 3 seconds
+            options.style.display = "none"
+            gameBoard.style.display = "none"
+            miniRetry.style.display = "none"
+            endOptions.style.display = "inline" //when game ends, want option to start over
+            continueG.style.display = "none"
+            return
+        }
         if (singlePlayer) {
             p2WinSound.play()
         } else {
@@ -393,8 +479,8 @@ async function checkWin() {
     if (turns === 9 && gameOver === false) {
         //console.log("It's a Draw!")
         message.innerText="It's a Draw!"
-        instructions.innerText="GAME SET"
-        mobileInfo.innerText="GAME SET"
+        instructions.innerText="END OF ROUND"
+        mobileInfo.innerText="END OF ROUND"
         miniRetry.style.display = "none"
         mouse.firstChild.src="greenMouseSad.png"
         cat.firstChild.src="redCatAngry.png"
@@ -444,7 +530,13 @@ function startOver() {
     options.style.display = "inline" //before starting game, only want options visible
     gameBoard.style.display = "none"
     miniRetry.style.display = "none"
+    continueG.style.display = "inline"
     endOptions.style.display = "none"
+
+    player1Score = 0
+    p1ScoreBoard.innerText=player1Score
+    player2Score = 0
+    p2ScoreBoard.innerText=player2Score
 }
 
 //Special thanks to NoirNerd, whose 100% free noughts and crosses tutorial on youtube/github I applied to some of my own code for the game board logic.
