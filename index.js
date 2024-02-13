@@ -25,6 +25,7 @@ const options = document.getElementById("options")
 const radioSingle = document.getElementById("game-mode-single")
 const radioMulti = document.getElementById("game-mode-multi")
 const difficultySlider = document.getElementById("difficulty-slider")
+const dynamicDifficultyBox = document.getElementById("dynamic-difficulty-box")
 const goalInput = document.getElementById("goal-to-reach")
 const startButton = document.getElementById("start-game")
 const gameBoard = document.getElementById("game-board")
@@ -39,11 +40,12 @@ const cat = document.getElementById("cat")
 
 let mobileInfoVisible = false
 let singlePlayer = true // multiplayer when false
-let difficulty = 9 //default difficulty
+let difficulty = 5 //default difficulty
 let gameStart = false
 let player1Turn = true // player2turn when false
 let player1Score = 0
 let player2Score = 0
+let scoreDifference = 0
 let gameOver = false
 let turns = 0
 let goal = 0
@@ -63,6 +65,7 @@ mobileInfoButton.addEventListener("click", displayMobileInstructions)
 radioSingle.addEventListener("click", updateInstructions)
 radioMulti.addEventListener("click", updateInstructions)
 difficultySlider.addEventListener("change", updateDifficulty)
+dynamicDifficultyBox.addEventListener("change", updateDynamic)
 goalInput.addEventListener("change", updateGoal)
 startButton.addEventListener("click", startGame)
 retry.addEventListener("click", startOver)
@@ -93,16 +96,30 @@ function updateInstructions() {
         instructions.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
         mobileInfo.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
         difficultySlider.disabled = false
+        dynamicDifficultyBox.disabled = false
     } else {
         instructions.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
         mobileInfo.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
         difficultySlider.disabled = true
+        dynamicDifficultyBox.disabled = true
     }
 }
 
 function updateDifficulty() {
+    //clickButton.play()
     difficulty = difficultySlider.value
     //console.log(difficulty)
+}
+
+function updateDynamic() {
+    clickButton.play()
+    if(dynamicDifficultyBox.checked === true) {
+        difficultySlider.disabled=true
+        difficulty = 5
+        difficultySlider.value = 5
+    } else {
+        difficultySlider.disabled=false
+    }
 }
 
 function updateGoal() {
@@ -118,6 +135,9 @@ function startGame() {
         //console.log("MULTIPLAYER!")
         singlePlayer = false
     }
+    // if (dynamicDifficultyBox.checked) {
+    //     difficulty = 5
+    // }
     startJingle.play()
     gameStart = true
     startButton.disabled = true
@@ -502,6 +522,20 @@ function updateScore(player) {
         player2Score++
         p2ScoreBoard.innerText=player2Score
     }
+    if(singlePlayer) {
+        scoreDifference = player1Score - player2Score
+        //console.log("difference = " + scoreDifference)
+    }
+    if(dynamicDifficultyBox.checked) {
+        if(scoreDifference > 0) { //if score difference greater than 0, player 1 (human) is winning
+            difficulty++ //so difficulty increases
+            //console.log("difficulty increased")
+        } else if(scoreDifference < 0 ) { //if score difference less than 0, player 1 (human) is losing
+            difficulty-- //so difficulty decreases
+            //console.log("difficulty decreased")
+        }
+        //console.log("difficulty = " + difficulty)
+    }
 }
 
 function startOver() {
@@ -528,6 +562,8 @@ function startOver() {
     mouse.firstChild.src="greenMouse.png"
     cat.firstChild.src="redCat.png"
     options.style.display = "inline" //before starting game, only want options visible
+    difficulty = 5
+    difficultySlider.value = 5
     gameBoard.style.display = "none"
     miniRetry.style.display = "none"
     continueG.style.display = "inline"
