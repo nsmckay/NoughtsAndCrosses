@@ -27,6 +27,7 @@ const radioMulti = document.getElementById("game-mode-multi")
 const difficultySlider = document.getElementById("difficulty-slider")
 const dynamicDifficultyBox = document.getElementById("dynamic-difficulty-box")
 const goalInput = document.getElementById("goal-to-reach")
+const cheatBox = document.getElementById("cheat-box")
 const startButton = document.getElementById("start-game")
 const gameBoard = document.getElementById("game-board")
 const endOptions = document.getElementById("end-options")
@@ -49,6 +50,7 @@ let scoreDifference = 0
 let gameOver = false
 let turns = 0
 let goal = 0
+let cheats = 0
 let squaresArray = [1,2,3,4,5,6,7,8,9]
 
 square1.addEventListener('click', function(){clickSquare(event,1), false})
@@ -67,6 +69,7 @@ radioMulti.addEventListener("click", updateInstructions)
 difficultySlider.addEventListener("change", updateDifficulty)
 dynamicDifficultyBox.addEventListener("change", updateDynamic)
 goalInput.addEventListener("change", updateGoal)
+cheatBox.addEventListener("change", updateCheat)
 startButton.addEventListener("click", startGame)
 retry.addEventListener("click", startOver)
 retry.disabled = true
@@ -97,11 +100,13 @@ function updateInstructions() {
         mobileInfo.innerText="SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU will place O marks after you. Win by placing 3 of your marks in a row before the CPU does."
         difficultySlider.disabled = false
         dynamicDifficultyBox.disabled = false
+        cheatBox.disabled = false
     } else {
         instructions.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
         mobileInfo.innerText="MULTI-PLAYER: Find a friend to play with. Player 1 goes first, placing their X mark in the grid below. Player 2 goes second, placing their O mark elsewhere in the grid. The winner is the first to place 3 marks in a row."
         difficultySlider.disabled = true
         dynamicDifficultyBox.disabled = true
+        cheatBox.disabled = true
     }
 }
 
@@ -125,6 +130,10 @@ function updateDynamic() {
 function updateGoal() {
     goal = goalInput.value
     console.log(goal)
+}
+
+function updateCheat() {
+    clickButton.play()
 }
 
 function startGame() {
@@ -158,6 +167,7 @@ function continueGame() {
     retry.disabled = true
     startButton.disabled = false
     turns = 0
+    cheats = 0
     squaresArray = [1,2,3,4,5,6,7,8,9]
 
     for(let i = 1; i < 10; i++) {
@@ -311,6 +321,36 @@ async function handleTurnSingle(num) {
                     // placeCPUSquare(r)
                     placeRandomSquare()
                     console.log(squaresArray)
+                }
+            }
+            if (cheatBox.checked) {
+                //console.log("Cheat")
+                let cheatChance = 0
+                if(difficulty > 5) {
+                    cheatChance = 100
+                }
+                if(difficulty > 6) {
+                    cheatChance = 50
+                }
+                if(difficulty > 7) {
+                    cheatChance = 20
+                }
+                if(difficulty > 8) {
+                    cheatChance = 10
+                }
+                if(difficulty > 9) {
+                    cheatChance = 5
+                }
+                if(cheatChance > 0) {
+                    const r = Math.floor(Math.random() * cheatChance) + 1
+                    console.log("random cheat attempt" + r)
+                    if(r === 1) {
+                        console.log("cheat success")
+                        player1Turn = false
+                        turns--
+                        cheats++
+                        placeRandomSquare()
+                    }
                 }
             }
         }
@@ -496,7 +536,10 @@ async function checkWin() {
         miniRetry.style.display = "none"
         endOptions.style.display = "inline"
        }
-    if (turns === 9 && gameOver === false) {
+    if (turns === 9 && gameOver === false ||
+        cheats === 1 && turns === 8 && gameOver === false ||
+        cheats === 2 && turns === 7 && gameOver === false ||
+        cheats === 3 && turns === 6 && gameOver === false) {
         //console.log("It's a Draw!")
         message.innerText="It's a Draw!"
         instructions.innerText="END OF ROUND"
@@ -546,6 +589,7 @@ function startOver() {
     retry.disabled = true
     startButton.disabled = false
     turns = 0
+    cheats = 0
     squaresArray = [1,2,3,4,5,6,7,8,9]
 
     for(let i = 1; i < 10; i++) {
