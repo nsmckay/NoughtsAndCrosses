@@ -277,11 +277,11 @@ button:active {
 }
 
 #mouse {
-    background-color: lightgreen;
+    background-color: #97ff57;
 }
 
 #cat {
-    background-color: lightsalmon;
+    background-color: #ff7878;
 }
 
 #mouse img, #cat img {
