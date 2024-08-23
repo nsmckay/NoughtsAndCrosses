@@ -1,28 +1,20 @@
 <html>
     <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
         <link rel="stylesheet" href="index.css">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
-        <title>Noughts and Crosses</title>
+        <title>Whack a Rat</title>
     </head>
     <body>
-        <audio id="flip-square">
-            <source src="flipcard.mp3" type="audio/mpeg">
-        </audio>
         <audio id="click-button">
             <source src="click-button.mp3" type="audio/mpeg">
         </audio>
         <audio id="start-jingle">
             <source src="twinklesparkle.mp3" type="audio/mpeg">
-        </audio>
-        <audio id="win-gong">
-            <source src="gong.mp3" type="audio/mpeg">
-        </audio>
-        <audio id="draw-gong">
-            <source src="paiste-gong.mp3" type="audio/mpeg">
         </audio>
         <audio id="p1-win-sound">
             <source src="yay.mp3" type="audio/mpeg">
@@ -30,37 +22,33 @@
         <audio id="p2-win-sound">
             <source src="boo.mp3" type="audio/mpeg">
         </audio>
-        <audio id="restart-gong">
-            <source src="spooky-gong.mp3" type="audio/mpeg">
-        </audio>
 
         <div id="container">
-            <h1><span class="green">NOUGHTS</span> & <span class="red">CROSSES</span> v2</h1>
+            <h1 id="game-title">WHACK A RAT!</h1>
             <div id="info">
                 <div id="info-container">
                     <p id="instructions">
-                        SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you.
-                        Win by placing 3 of your marks in a row before the CPU does.
+                        Hit as many rats as you can before the time runs out. Don't hit any cats!
                     </p>
-                    <button id="mobile-instructions-button">?</button>
+                    <!-- <button id="mobile-instructions-button">?</button>
                     <p id="mobile-instructions">
-                        SINGLE-PLAYER: As Player 1, place your X marks in the grid below. The CPU, Player 2, will place O marks after you.
-                        Win by placing 3 of your marks in a row before the CPU does.
-                    </p>
+                        Hit as many rats as you can before the time runs out. Don't hit any cats!
+                    </p> -->
                 </div>
-                <button id="retry-mini">←</button>
-                <!-- <button id="continue-mini">→</button> -->
+                <!-- <button id="retry-mini">←</button> -->
             </div>
             <div id="game-area">
                 <div id="options">
-                    <p><b>Game mode:</b></p>
+                    <p><b>Difficulty Level:</b></p>
                     <div id="radio">
-                        <input type="radio" id="game-mode-single" name="game-mode" value="singleplayer" checked>
-                        <label for="game-mode-single">Singleplayer</label>
-                        <input type="radio" id="game-mode-multi" name="game-mode" value="multiplayer">
-                        <label for="game-mode-multi">Multiplayer</label>
+                        <input type="radio" id="difficulty-easy" name="difficulty" value="easy" checked>
+                        <label for="difficulty-easy">Easy</label>
+                        <input type="radio" id="difficulty-medium" name="difficulty" value="medium">
+                        <label for="difficulty-medium">Medium</label>
+                        <input type="radio" id="difficulty-hard" name="difficulty" value="hard">
+                        <label for="difficulty-hard">Hard</label>
                     </div>
-                    <div id="difficulty-option">
+                    <!-- <div id="difficulty-option">
                         <label for="difficulty-slider">Difficulty</label>
                         <input type="range" id="difficulty-slider" name="difficulty-slider" min="0" max="10" step="1" value="5">
                         <label for="dynamic-difficulty-box">Dynamic</label>
@@ -71,35 +59,34 @@
                         <input type="number" id="goal-to-reach" name="goal-to-reach" min="0" max="20" value="10">
                         <label for="cheat-box">CPU Cheating</label>
                         <input type="checkbox" id="cheat-box" name="cheat-box" value="cheat">
-                    </div>
+                    </div> -->
                     <button id="start-game">START</button>
                 </div>
                 <div id="game-board">
-                    <div class="square" id="square-1"></div>
-                    <div class="square" id="square-2"></div>
-                    <div class="square" id="square-3"></div>
-                    <div class="square" id="square-4"></div>
-                    <div class="square" id="square-5"></div>
-                    <div class="square" id="square-6"></div>
-                    <div class="square" id="square-7"></div>
-                    <div class="square" id="square-8"></div>
-                    <div class="square" id="square-9"></div>
+                    <h2 id="score-card">SCORE: 0</h2>
+                    <div id="grid">
+                    </div>
                 </div>
                 <div id="end-options">
-                    <button id="retry">START OVER</button>
-                    <button id="continue">CONTINUE</button>
+                    <img src="cross.png">
+                    <div id="end-option-buttons">
+                        <!-- <button id="continue">CONTINUE</button> -->
+                        <button id="continue">PLAY AGAIN</button>
+                        <!-- <button id="retry">START OVER</button> -->
+                        <button id="retry">QUIT</button>
+                    </div>
                 </div>
             </div>
             <div id="messages">
-                <div id="p1-msg">
+                <!-- <div id="p1-msg">
                     <p id="p1-score">0</p>
                     <div id="mouse"><img src="greenMouse.png"></div>
-                </div>
-                <div id="message">Select a mode, and click START to begin!</div>
-                <div id="p2-msg">
+                </div> -->
+                <div id="message">Select your desired difficulty, and click START to begin!</div>
+                <!-- <div id="p2-msg">
                     <p id="p2-score">0</p>
                     <div id="cat"><img src="redCat.png"></div>
-                </div>
+                </div> -->
             </div>
         </div>  
     </body>
