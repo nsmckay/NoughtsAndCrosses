@@ -14,6 +14,11 @@ h1 {
     font-family: 'Lakki Reddy', cursive;
     /* text-shadow: 1px 2px 1px #d28d33; */
     filter: drop-shadow(2px 5px 2px red);
+    user-select: none;
+    -moz-user-select: none; /* prevent player from dragging images */
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .red {
@@ -128,6 +133,11 @@ button:active {
 #end-options img {
     margin-top: 10px;
     margin-bottom: 10px;
+    user-select: none;
+    -moz-user-select: none; /* prevent player from dragging images */
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 #options p {
@@ -227,6 +237,19 @@ button:active {
 #game-board {
     display: flex;
     margin: 0;
+}
+
+#board-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.board-header-duo {
+    justify-content: space-between;
+}
+
+.board-header-mono {
+    justify-content: center;
 }
 
 #grid {

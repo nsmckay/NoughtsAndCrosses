@@ -23,8 +23,10 @@ const instructions = document.getElementById("instructions")
 const options = document.getElementById("options")
 const startButton = document.getElementById("start-game")
 const gameBoard = document.getElementById("game-board")
+const boardHeader = document.getElementById("board-header")
 const grid = document.getElementById("grid")
 const scoreCard = document.getElementById("score-card")
+const timeCard = document.getElementById("time-card")
 const endOptions = document.getElementById("end-options")
 const quitButton = document.getElementById("retry")
 const playAgainButton = document.getElementById("continue")
@@ -38,9 +40,11 @@ const message = document.getElementById("message")
 let currentMoleSquare
 let currentBadMoleSquare
 let gameScore = 0;
+let gameTime = 0;
 let gameOver = false
 let intervalMole
 let intervalBadMole
+let intervalTime
 let intervalEnd
 
 // radioSingle.addEventListener("click", updateInstructions)
@@ -97,8 +101,14 @@ function setGame() {
         moleSquare.addEventListener("click", selectSquare)
         grid.appendChild(moleSquare)
     }
+    gameTime = 30
+    timeCard.display="inline"
+    timeCard.innerText = "TIME: " + gameTime.toString()
+    boardHeader.classList.add("board-header-duo")
+    boardHeader.classList.remove("board-header-mono")
     intervalMole = setInterval(setMole, 2000) //call mole every 2 seconds 
-    intervalBadMole = setInterval(setBadMole, 3000) //call every 3 seconds
+    intervalBadMole = setInterval(setBadMole, 3000) //call bad mole every 3 seconds
+    intervalTime = setInterval(tick, 1000) //reduce timer by 1 each second
 }
 
 function setMole() {
@@ -142,6 +152,17 @@ function setBadMole() {
     currentBadMoleSquare.appendChild(badMole)
 }
 
+function tick() {
+    if(gameTime > 0) {
+        gameTime--
+        timeCard.innerText = "TIME: " + gameTime.toString()
+    } else {
+        console.log("times up")
+        timeCard.innerText = "TIME: " + gameTime.toString()
+        gameOverNow()
+    }
+}
+
 function getRandomSquare() {
     let num = Math.floor(Math.random() * 9) //return integer 0-8
     return num.toString()
@@ -157,10 +178,19 @@ function selectSquare() {
         scoreCard.innerText = "SCORE: " + gameScore.toString()
     }
     else if (this===currentBadMoleSquare) {
-        scoreCard.innerText = "GAME OVER: " + gameScore.toString()
-        gameOver = true
-        intervalEnd = setInterval(endGame, 3000) //after 3 seconds, bring up the end game options
+        gameOverNow()
     }
+}
+
+function gameOverNow() {
+    scoreCard.innerText = "GAME OVER: " + gameScore.toString()
+    clearInterval(intervalTime)
+    boardHeader.classList.remove("board-header-duo") //only want to display the GAME OVER now, so switch to mono
+    boardHeader.classList.add("board-header-mono")
+    timeCard.innerText = ""
+    timeCard.display = "none"
+    gameOver = true
+    intervalEnd = setInterval(endGame, 3000) //after 3 seconds, bring up the end game options
 }
 
 function endGame() {
