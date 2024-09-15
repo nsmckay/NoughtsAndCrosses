@@ -1,4 +1,4 @@
-// const clickButton = document.getElementById("click-button")
+const clickButton = document.getElementById("click-button")
 const startJingle = document.getElementById("start-jingle")
 
 // const instructions = document.getElementById("instructions")
@@ -21,6 +21,9 @@ const startJingle = document.getElementById("start-jingle")
 const gameTitle = document.getElementById("game-title")
 const instructions = document.getElementById("instructions")
 const options = document.getElementById("options")
+const radioEasy = document.getElementById("difficulty-easy")
+const radioMedium = document.getElementById("difficulty-medium")
+const radioHard = document.getElementById("difficulty-hard")
 const startButton = document.getElementById("start-game")
 const gameBoard = document.getElementById("game-board")
 const boardHeader = document.getElementById("board-header")
@@ -37,13 +40,49 @@ const message = document.getElementById("message")
 // let gameStart = false
 // let gameOver = false
 
+let gameDifficulty = 0; //easy
 let currentMoleSquare
+let currentMole2Square
+let currentGreaterMoleSquare
+let currentGreaterMole2Square
+let currentGoldMoleSquare
+let currentTimerMoleSquare
+let currentMultiMoleSquare
 let currentBadMoleSquare
+let currentBadMole2Square
+let currentBadMole3Square
+let currentVeryBadMoleSquare
+let currentVeryBadMole2Square
+let currentKillerMoleSquare
 let gameScore = 0;
 let gameTime = 0;
 let gameOver = false
+let moleHit = 0
 let intervalMole
+let mole2Hit = 0
+let intervalMole2
+let greaterMoleHit = 0
+let intervalGreaterMole
+let greaterMole2Hit = 0
+let intervalGreaterMole2
+let goldMoleHit = 0
+let intervalGoldMole
+let timerMoleHit = 0
+let intervalTimerMole
+let multiMoleHit = 0
+let intervalMultiMole
+let badMoleHit = 0
 let intervalBadMole
+let badMole2Hit = 0
+let intervalBadMole2
+let badMole3Hit = 0
+let intervalBadMole3
+let veryBadMoleHit = 0
+let intervalVeryBadMole
+let veryBadMole2Hit = 0
+let intervalVeryBadMole2
+let killerMoleHit = 0
+let intervalKillerMole
 let intervalTime
 let intervalEnd
 
@@ -54,6 +93,9 @@ let intervalEnd
 // retry.disabled = true
 // miniRetry.addEventListener("click", startOver)
 // continueG.addEventListener("click", continueGame)
+radioEasy.addEventListener("click", updateDifficulty)
+radioMedium.addEventListener("click", updateDifficulty)
+radioHard.addEventListener("click", updateDifficulty)
 startButton.addEventListener("click", startGame)
 quitButton.addEventListener("click", quitGame)
 playAgainButton.addEventListener("click", startGame)
@@ -83,6 +125,18 @@ endOptions.style.display = "none"
 //     }
 // }
 
+function updateDifficulty() {
+    clickButton.play()
+    if(radioEasy.checked) {
+        gameDifficulty = 0 //easy
+    } else if (radioMedium.checked) {
+        gameDifficulty = 1 //medium
+    } else {
+        gameDifficulty = 2 //hard
+    }
+    //console.log(gameDifficulty)
+}
+
 function startGame() {
     startJingle.play()
     gameTitle.style.display = "none"
@@ -95,19 +149,77 @@ function startGame() {
 
 function setGame() {
     //set up 3 X 3 grid
-    for(let i = 0; i < 9; i++) {
-        let moleSquare = document.createElement("div")
-        moleSquare.id = i.toString()
-        moleSquare.addEventListener("click", selectSquare)
-        grid.appendChild(moleSquare)
+    // for(let i = 0; i < 9; i++) {
+    //     let moleSquare = document.createElement("div")
+    //     moleSquare.id = i.toString()
+    //     moleSquare.addEventListener("click", selectSquare)
+    //     grid.appendChild(moleSquare)
+    // }
+    if (gameDifficulty === 2) {
+        //set up 5 X 5 grid
+        //grid.setAttribute("style", "width:500px")
+        // grid.setAttribute("style", "height:500px")
+        grid.style.width = 500
+        grid.style.height = 500
+        for(let i = 0; i < 25; i++) {
+            let moleSquare = document.createElement("div")
+            moleSquare.id = i.toString()
+            moleSquare.addEventListener("click", selectSquare)
+            grid.appendChild(moleSquare)
+        }
+        gameTime = 120
+    } else if (gameDifficulty === 1) {
+        //set up 4 X 4 grid
+        grid.style.width = 400
+        grid.style.height = 400
+        for(let i = 0; i < 16; i++) {
+            let moleSquare = document.createElement("div")
+            moleSquare.id = i.toString()
+            moleSquare.addEventListener("click", selectSquare)
+            grid.appendChild(moleSquare)
+        }
+        gameTime = 60
+    } else {
+        //set up 3 X 3 grid
+        grid.style.width = 300
+        grid.style.height = 300
+        for(let i = 0; i < 9; i++) {
+            let moleSquare = document.createElement("div")
+            moleSquare.id = i.toString()
+            moleSquare.addEventListener("click", selectSquare)
+            grid.appendChild(moleSquare)
+        }
+        gameTime = 30
     }
-    gameTime = 30
+    //gameTime = 30
     timeCard.display="inline"
     timeCard.innerText = "TIME: " + gameTime.toString()
     boardHeader.classList.add("board-header-duo")
     boardHeader.classList.remove("board-header-mono")
-    intervalMole = setInterval(setMole, 2000) //call mole every 2 seconds 
-    intervalBadMole = setInterval(setBadMole, 3000) //call bad mole every 3 seconds
+    if(gameDifficulty === 2) {
+        intervalMole = setInterval(setMole, 2000) //call mole every 2 seconds
+        intervalMole2 = setInterval(setMole2, 2000) 
+        intervalGreaterMole = setInterval(setGreaterMole, 3000)
+        intervalGreaterMole2 = setInterval(setGreaterMole2, 3000)
+        intervalGoldMole = setInterval(setGoldMole, 20000)
+        intervalTimerMole = setInterval(setTimerMole, 5000)
+        intervalMultiMole = setInterval(setMultiMole, 5000)
+        intervalBadMole = setInterval(setBadMole, 3000) //call bad mole every 3 seconds
+        intervalBadMole2 = setInterval(setBadMole2, 3000)
+        intervalBadMole3 = setInterval(setBadMole3, 3000)
+        intervalVeryBadMole = setInterval(setVeryBadMole, 5000)
+        intervalVeryBadMole2 = setInterval(setVeryBadMole2, 5000)
+        intervalKillerMole = setInterval(setKillerMole, 10000)
+    } else if(gameDifficulty === 1) {
+        intervalMole = setInterval(setMole, 2000)
+        intervalGreaterMole = setInterval(setGreaterMole, 3000)
+        intervalBadMole = setInterval(setBadMole, 3000)
+        intervalVeryBadMole = setInterval(setVeryBadMole, 5000)
+    } else {
+        intervalMole = setInterval(setMole, 2000)
+        intervalMole2 = setInterval(setMole2, 2000) 
+        intervalBadMole = setInterval(setBadMole, 3000)
+    }
     intervalTime = setInterval(tick, 1000) //reduce timer by 1 each second
 }
 
@@ -121,15 +233,379 @@ function setMole() {
     }
 
     let mole = document.createElement("img")
-    mole.src = "./greenMouse.png"
+    mole.src = "img/greyMouse.png"
 
     let randomNum = getRandomSquare()
     //check to ensure no collisions
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreater2MoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
     if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
         return
     }
     currentMoleSquare = document.getElementById(randomNum)
     currentMoleSquare.appendChild(mole)
+    moleHit = 0 //make mole whackable
+}
+
+function setMole2() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentMole2Square) {
+        currentMole2Square.innerHTML = ""
+    }
+
+    let mole2 = document.createElement("img")
+    mole2.src = "img/greyMouse.png"
+
+    let randomNum = getRandomSquare()
+    //check to ensure no collisions
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentMole2Square = document.getElementById(randomNum)
+    currentMole2Square.appendChild(mole2)
+    mole2Hit = 0 //make mole whackable
+}
+
+function setGreaterMole() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentGreaterMoleSquare) {
+        currentGreaterMoleSquare.innerHTML = ""
+    }
+
+    let greaterMole = document.createElement("img")
+    greaterMole.src = "img/brownMouse.png"
+
+    let randomNum = getRandomSquare()
+    //check to ensure no collisions
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentGreaterMoleSquare = document.getElementById(randomNum)
+    currentGreaterMoleSquare.appendChild(greaterMole)
+    greaterMoleHit = 0 //make mole whackable
+}
+
+function setGreaterMole2() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentGreaterMole2Square) {
+        currentGreaterMole2Square.innerHTML = ""
+    }
+
+    let greaterMole2 = document.createElement("img")
+    greaterMole2.src = "img/brownMouse.png"
+
+    let randomNum = getRandomSquare()
+    //check to ensure no collisions
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentGreaterMole2Square = document.getElementById(randomNum)
+    currentGreaterMole2Square.appendChild(greaterMole2)
+    greaterMole2Hit = 0 //make mole whackable
+}
+
+function setGoldMole() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentGoldMoleSquare) {
+        currentGoldMoleSquare.innerHTML = ""
+    }
+
+    let goldMole = document.createElement("img")
+    goldMole.src = "img/goldMouse.png"
+
+    let randomNum = getRandomSquare()
+    //check to ensure no collisions
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentGoldMoleSquare = document.getElementById(randomNum)
+    currentGoldMoleSquare.appendChild(goldMole)
+    goldMoleHit = 0 //make mole whackable
+}
+
+function setTimerMole() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentTimerMoleSquare) {
+        currentTimerMoleSquare.innerHTML = ""
+    }
+
+    let timerMole = document.createElement("img")
+    timerMole.src = "img/greenMouse.png"
+
+    let randomNum = getRandomSquare()
+    //check to ensure no collisions
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentTimerMoleSquare = document.getElementById(randomNum)
+    currentTimerMoleSquare.appendChild(timerMole)
+    timerMoleHit = 0 //make mole whackable
+}
+
+function setMultiMole() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentMultiMoleSquare) {
+        currentMultiMoleSquare.innerHTML = ""
+    }
+
+    let multiMole = document.createElement("img")
+    multiMole.src = "img/blueMouse.png"
+
+    let randomNum = getRandomSquare()
+    //check to ensure no collisions
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentMultiMoleSquare = document.getElementById(randomNum)
+    currentMultiMoleSquare.appendChild(multiMole)
+    multiMoleHit = 0 //make mole whackable
 }
 
 function setBadMole() {
@@ -142,14 +618,318 @@ function setBadMole() {
     }
 
     let badMole = document.createElement("img")
-    badMole.src = "./redCat.png"
+    badMole.src = "img/orangeCat.png"
 
     let randomNum = getRandomSquare()
     if(currentMoleSquare && currentMoleSquare.id === randomNum) {
         return
     }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
     currentBadMoleSquare = document.getElementById(randomNum)
     currentBadMoleSquare.appendChild(badMole)
+    badMoleHit = 0  //make bad mole whackable
+}
+
+function setBadMole2() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentBadMole2Square) {
+        currentBadMole2Square.innerHTML = ""
+    }
+
+    let badMole2 = document.createElement("img")
+    badMole2.src = "img/orangeCat.png"
+
+    let randomNum = getRandomSquare()
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentBadMole2Square = document.getElementById(randomNum)
+    currentBadMole2Square.appendChild(badMole2)
+    badMole2Hit = 0  //make bad mole whackable
+}
+
+function setBadMole3() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentBadMole3Square) {
+        currentBadMole3Square.innerHTML = ""
+    }
+
+    let badMole3 = document.createElement("img")
+    badMole3.src = "img/orangeCat.png"
+
+    let randomNum = getRandomSquare()
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentBadMole3Square = document.getElementById(randomNum)
+    currentBadMole3Square.appendChild(badMole3)
+    badMole3Hit = 0  //make bad mole whackable
+}
+
+function setVeryBadMole() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentVeryBadMoleSquare) {
+        currentVeryBadMoleSquare.innerHTML = ""
+    }
+
+    let veryBadMole = document.createElement("img")
+    veryBadMole.src = "img/redCat.png"
+
+    let randomNum = getRandomSquare()
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentVeryBadMoleSquare = document.getElementById(randomNum)
+    currentVeryBadMoleSquare.appendChild(veryBadMole)
+    veryBadMoleHit = 0  //make bad mole whackable
+}
+
+function setVeryBadMole2() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentVeryBadMole2Square) {
+        currentVeryBadMole2Square.innerHTML = ""
+    }
+
+    let veryBadMole2 = document.createElement("img")
+    veryBadMole2.src = "img/redCat.png"
+
+    let randomNum = getRandomSquare()
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentKillerMoleSquare && currentKillerMoleSquare.id === randomNum) {
+        return
+    }
+    currentVeryBadMole2Square = document.getElementById(randomNum)
+    currentVeryBadMole2Square.appendChild(veryBadMole2)
+    veryBadMole2Hit = 0  //make bad mole whackable
+}
+
+function setKillerMole() {
+    if(gameOver) {
+        return
+    }
+
+    if(currentKillerMoleSquare) {
+        currentKillerMoleSquare.innerHTML = ""
+    }
+
+    let killerMole = document.createElement("img")
+    killerMole.src = "img/purpleCat.png"
+
+    let randomNum = getRandomSquare()
+    if(currentMoleSquare && currentMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMole2Square && currentMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGreaterMoleSquare && currentGreaterMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentGreaterMole2Square && currentGreaterMole2Square.id === randomNum) {
+        return
+    }
+    if(currentGoldMoleSquare && currentGoldMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentTimerMoleSquare && currentTimerMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentMultiMoleSquare && currentMultiMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMoleSquare && currentBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentBadMole2Square && currentBadMole2Square.id === randomNum) {
+        return
+    }
+    if(currentBadMole3Square && currentBadMole3Square.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMoleSquare && currentVeryBadMoleSquare.id === randomNum) {
+        return
+    }
+    if(currentVeryBadMole2Square && currentVeryBadMole2Square.id === randomNum) {
+        return
+    }
+    currentKillerMoleSquare = document.getElementById(randomNum)
+    currentKillerMoleSquare.appendChild(killerMole)
+    killerMoleHit = 0  //make bad mole whackable
 }
 
 function tick() {
@@ -164,7 +944,15 @@ function tick() {
 }
 
 function getRandomSquare() {
-    let num = Math.floor(Math.random() * 9) //return integer 0-8
+    //let num = Math.floor(Math.random() * 9) //return integer 0-8
+    let num = 0
+    if (gameDifficulty === 2) {
+        num = Math.floor(Math.random() * 25) //return integer 0-24
+    } else if (gameDifficulty === 1) {
+        num = Math.floor(Math.random() * 16) //return integer 0-15
+    } else {
+        num = Math.floor(Math.random() * 9) //return integer 0-8
+    }
     return num.toString()
 }
 
@@ -174,10 +962,128 @@ function selectSquare() {
     }
     
     if(this===currentMoleSquare) {
+        if(moleHit === 1) {
+            return
+        }
         gameScore += 20
+        moleHit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentMole2Square) {
+        if(mole2Hit === 1) {
+            return
+        }
+        gameScore += 20
+        mole2Hit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentGreaterMoleSquare) {
+        if(greaterMoleHit === 1) {
+            return
+        }
+        gameScore += 50
+        greaterMoleHit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentGreaterMole2Square) {
+        if(greaterMole2Hit === 1) {
+            return
+        }
+        gameScore += 50
+        greaterMole2Hit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentGoldMoleSquare) {
+        if(goldMoleHit === 1) {
+            return
+        }
+        gameScore += 200
+        goldMoleHit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentTimerMoleSquare) {
+        if(timerMoleHit === 1) {
+            return
+        }
+        gameScore += 10
+        gameTime += 10
+        timerMoleHit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+        timeCard.innerText = "TIME: " + gameTime.toString()
+    }
+    else if (this===currentMultiMoleSquare) {
+        if(multiMoleHit === 10) {
+            return
+        }
+        gameScore += 10
+        multiMoleHit += 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
     }
     else if (this===currentBadMoleSquare) {
+        //gameOverNow()
+        if(badMoleHit === 1) {
+            return
+        }
+        gameScore -= 50
+        badMoleHit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentBadMole2Square) {
+        //gameOverNow()
+        if(badMole2Hit === 1) {
+            return
+        }
+        gameScore -= 50
+        badMole2Hit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentBadMole3Square) {
+        //gameOverNow()
+        if(badMole3Hit === 1) {
+            return
+        }
+        gameScore -= 50
+        badMole3Hit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+    }
+    else if (this===currentVeryBadMoleSquare) {
+        //gameOverNow()
+        if(veryBadMoleHit === 1) {
+            return
+        }
+        gameScore -= 100
+        gameTime -= 20
+        veryBadMoleHit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+        timeCard.innerText = "TIME: " + gameTime.toString()
+        if (gameTime < 0) {
+            gameOverNow()
+            timeCard.innerText = "TIME: 0"
+        }
+    }
+    else if (this===currentVeryBadMole2Square) {
+        //gameOverNow()
+        if(veryBadMole2Hit === 1) {
+            return
+        }
+        gameScore -= 100
+        gameTime -= 20
+        veryBadMole2Hit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
+        timeCard.innerText = "TIME: " + gameTime.toString()
+        if (gameTime < 0) {
+            gameOverNow()
+            timeCard.innerText = "TIME: 0"
+        }
+    }
+    else if (this===currentKillerMoleSquare) {
+        //gameOverNow()
+        if(killerMoleHit === 1) {
+            return
+        }
+        gameScore -= 50
+        killerMoleHit = 1
+        scoreCard.innerText = "SCORE: " + gameScore.toString()
         gameOverNow()
     }
 }
