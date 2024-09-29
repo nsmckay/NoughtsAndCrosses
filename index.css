@@ -282,6 +282,46 @@ button:active {
     -ms-user-select: none;
 }
 
+.popUpMole, .popDownMole {
+    animation-name: popUp;
+    animation-duration: 500ms;
+    animation-fill-mode: backwards;
+    animation-iteration-count: infinite;
+    position: relative;
+}
+
+.popDownMole {
+    animation-direction: reverse;
+}
+
+@keyframes popUp {
+    0% {height: 0%;
+        bottom: -100%;}
+    100% {height: 100%;
+        bottom: 0%;}
+}
+
+/* .popStayMole {
+    animation-name: popStay;
+    animation-duration: 500ms;
+    animation-fill-mode: backwards;
+    animation-iteration-count: infinite;
+    position: relative;
+} */
+
+/* @keyframes popStay {
+    0% {height: 100%}
+    100% {height: 100%;}
+} */
+
+.pauseMole {
+    height: 100%;
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+    -o-animation-play-state:paused; 
+    animation-play-state:paused;
+}
+
 .square {
     margin: 5px;
     background-color: white;

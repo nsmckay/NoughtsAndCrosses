@@ -125,6 +125,9 @@ endOptions.style.display = "none"
 //     }
 // }
 
+const delay = ms => new Promise(res => setTimeout(res, ms)); //utility function for synchronous delay
+//thanks to https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
+
 function updateDifficulty() {
     clickButton.play()
     if(radioEasy.checked) {
@@ -223,13 +226,17 @@ function setGame() {
     intervalTime = setInterval(tick, 1000) //reduce timer by 1 each second
 }
 
-function setMole() {
+async function setMole() {
     if(gameOver) {
         return
     }
 
     if(currentMoleSquare) {
         currentMoleSquare.innerHTML = ""
+        // if(currentMoleSquare.lastChild.classList.contains("popDownMole")) {
+        //     currentMoleSquare.lastChild.classList.remove("popDownMole")
+        // }
+        // currentMoleSquare.lastChild.classList.remove("popDownMole")
     }
 
     let mole = document.createElement("img")
@@ -276,9 +283,29 @@ function setMole() {
     currentMoleSquare = document.getElementById(randomNum)
     currentMoleSquare.appendChild(mole)
     moleHit = 0 //make mole whackable
+    currentMoleSquare.lastChild.classList.add("popUpMole")
+    console.log("mole pop up")
+    // setTimeout(() => {
+    //     // stayMole("mole")
+    //     pauseMole("mole")
+    // }, 1000)
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentMoleSquare.lastChild.classList.remove("popUpMole")
+    // pauseMole("mole")
+    // setTimeout(() => {
+    //     removeMole("mole")
+    // }, 1000)
+    await delay(1000)
+    if(gameOver) {
+        return
+    }
+    removeMole("mole")
 }
 
-function setMole2() {
+async function setMole2() {
     if(gameOver) {
         return
     }
@@ -331,9 +358,21 @@ function setMole2() {
     currentMole2Square = document.getElementById(randomNum)
     currentMole2Square.appendChild(mole2)
     mole2Hit = 0 //make mole whackable
+    currentMole2Square.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentMole2Square.lastChild.classList.remove("popUpMole")
+    // pauseMole("mole2")
+    await delay(1000)
+    if(gameOver) {
+        return
+    }
+    removeMole("mole2")
 }
 
-function setGreaterMole() {
+async function setGreaterMole() {
     if(gameOver) {
         return
     }
@@ -386,9 +425,21 @@ function setGreaterMole() {
     currentGreaterMoleSquare = document.getElementById(randomNum)
     currentGreaterMoleSquare.appendChild(greaterMole)
     greaterMoleHit = 0 //make mole whackable
+    currentGreaterMoleSquare.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentGreaterMoleSquare.lastChild.classList.remove("popUpMole")
+    // pauseMole("greaterMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    removeMole("greaterMole")
 }
 
-function setGreaterMole2() {
+async function setGreaterMole2() {
     if(gameOver) {
         return
     }
@@ -441,9 +492,21 @@ function setGreaterMole2() {
     currentGreaterMole2Square = document.getElementById(randomNum)
     currentGreaterMole2Square.appendChild(greaterMole2)
     greaterMole2Hit = 0 //make mole whackable
+    currentGreaterMole2Square.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentGreaterMole2Square.lastChild.classList.remove("popUpMole")
+    // pauseMole("greaterMole2")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    removeMole("greaterMole2")
 }
 
-function setGoldMole() {
+async function setGoldMole() {
     if(gameOver) {
         return
     }
@@ -496,9 +559,21 @@ function setGoldMole() {
     currentGoldMoleSquare = document.getElementById(randomNum)
     currentGoldMoleSquare.appendChild(goldMole)
     goldMoleHit = 0 //make mole whackable
+    currentGoldMoleSquare.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentGoldMoleSquare.lastChild.classList.remove("popUpMole")
+    // pauseMole("goldMole")
+    await delay(100)
+    if(gameOver) {
+        return
+    }
+    removeMole("goldMole")
 }
 
-function setTimerMole() {
+async function setTimerMole() {
     if(gameOver) {
         return
     }
@@ -551,9 +626,20 @@ function setTimerMole() {
     currentTimerMoleSquare = document.getElementById(randomNum)
     currentTimerMoleSquare.appendChild(timerMole)
     timerMoleHit = 0 //make mole whackable
+    currentTimerMoleSquare.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentTimerMoleSquare.lastChild.classList.remove("popUpMole")
+    await delay(200)
+    if(gameOver) {
+        return
+    }
+    removeMole("timerMole")
 }
 
-function setMultiMole() {
+async function setMultiMole() {
     if(gameOver) {
         return
     }
@@ -606,9 +692,20 @@ function setMultiMole() {
     currentMultiMoleSquare = document.getElementById(randomNum)
     currentMultiMoleSquare.appendChild(multiMole)
     multiMoleHit = 0 //make mole whackable
+    currentMultiMoleSquare.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentMultiMoleSquare.lastChild.classList.remove("popUpMole")
+    await delay(2000)
+    if(gameOver) {
+        return
+    }
+    removeMole("multiMole")
 }
 
-function setBadMole() {
+async function setBadMole() {
     if(gameOver) {
         return
     }
@@ -660,9 +757,20 @@ function setBadMole() {
     currentBadMoleSquare = document.getElementById(randomNum)
     currentBadMoleSquare.appendChild(badMole)
     badMoleHit = 0  //make bad mole whackable
+    currentBadMoleSquare.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentBadMoleSquare.lastChild.classList.remove("popUpMole")
+    await delay(2000)
+    if(gameOver) {
+        return
+    }
+    removeMole("badMole")
 }
 
-function setBadMole2() {
+async function setBadMole2() {
     if(gameOver) {
         return
     }
@@ -714,9 +822,20 @@ function setBadMole2() {
     currentBadMole2Square = document.getElementById(randomNum)
     currentBadMole2Square.appendChild(badMole2)
     badMole2Hit = 0  //make bad mole whackable
+    currentBadMole2Square.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentBadMole2Square.lastChild.classList.remove("popUpMole")
+    await delay(2000)
+    if(gameOver) {
+        return
+    }
+    removeMole("badMole2")
 }
 
-function setBadMole3() {
+async function setBadMole3() {
     if(gameOver) {
         return
     }
@@ -768,9 +887,20 @@ function setBadMole3() {
     currentBadMole3Square = document.getElementById(randomNum)
     currentBadMole3Square.appendChild(badMole3)
     badMole3Hit = 0  //make bad mole whackable
+    currentBadMole3Square.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentBadMole3Square.lastChild.classList.remove("popUpMole")
+    await delay(2000)
+    if(gameOver) {
+        return
+    }
+    removeMole("badMole3")
 }
 
-function setVeryBadMole() {
+async function setVeryBadMole() {
     if(gameOver) {
         return
     }
@@ -822,9 +952,20 @@ function setVeryBadMole() {
     currentVeryBadMoleSquare = document.getElementById(randomNum)
     currentVeryBadMoleSquare.appendChild(veryBadMole)
     veryBadMoleHit = 0  //make bad mole whackable
+    currentVeryBadMoleSquare.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentVeryBadMoleSquare.lastChild.classList.remove("popUpMole")
+    await delay(1000)
+    if(gameOver) {
+        return
+    }
+    removeMole("veryBadMole")
 }
 
-function setVeryBadMole2() {
+async function setVeryBadMole2() {
     if(gameOver) {
         return
     }
@@ -876,9 +1017,20 @@ function setVeryBadMole2() {
     currentVeryBadMole2Square = document.getElementById(randomNum)
     currentVeryBadMole2Square.appendChild(veryBadMole2)
     veryBadMole2Hit = 0  //make bad mole whackable
+    currentVeryBadMole2Square.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentVeryBadMole2Square.lastChild.classList.remove("popUpMole")
+    await delay(1000)
+    if(gameOver) {
+        return
+    }
+    removeMole("veryBadMole2")
 }
 
-function setKillerMole() {
+async function setKillerMole() {
     if(gameOver) {
         return
     }
@@ -930,6 +1082,17 @@ function setKillerMole() {
     currentKillerMoleSquare = document.getElementById(randomNum)
     currentKillerMoleSquare.appendChild(killerMole)
     killerMoleHit = 0  //make bad mole whackable
+    currentKillerMoleSquare.lastChild.classList.add("popUpMole")
+    await delay(500)
+    if(gameOver) {
+        return
+    }
+    currentKillerMoleSquare.lastChild.classList.remove("popUpMole")
+    await delay(200)
+    if(gameOver) {
+        return
+    }
+    removeMole("killerMole")
 }
 
 function tick() {
@@ -956,6 +1119,152 @@ function getRandomSquare() {
     return num.toString()
 }
 
+// function stayMole(moleType) {
+//     if(moleType === "mole") {
+//         currentMoleSquare.lastChild.src = "img/greyMouseKO.png"
+//         currentMoleSquare.lastChild.classList.remove("popUpMole")
+//         currentMoleSquare.lastChild.classList.add("popStayMole")
+//     }
+//     if(moleType === "mole2") {
+//         currentMoleSquare.lastChild.src = "img/greyMouseKO.png"
+//     }
+// }
+
+// function pauseMole(moleType) {
+//     if(moleType === "mole") {
+//         // currentMoleSquare.lastChild.classList.remove("popUpMole")
+//         // currentMoleSquare.lastChild.classList.add("pauseMole")
+//         console.log("mole paused")
+//         // setTimeout(() => {currentMoleSquare.lastChild.classList.remove("pauseMole"), 2000})
+//     }
+//     if(moleType === "mole2") {
+//         // currentMoleSquare.lastChild.src = "img/greyMouseKO.png"
+//     }
+//     if(moleType === "greaterMole") {
+//         //greaterMole
+//     }
+// }
+
+async function removeMole(moleType) {
+    if(moleType === "mole") {
+        //currentMoleSquare.lastChild.src = "img/greyMouseKO.png"
+        // currentMoleSquare.lastChild.classList.remove("popStayMole")
+        // currentMoleSquare.lastChild.classList.remove("popUpMole")
+        currentMoleSquare.lastChild.classList.add("popDownMole")
+        console.log("mole pop down")
+        // setTimeout(() => {
+        //     currentMoleSquare.removeChild(currentMoleSquare.lastChild)
+        // }, 500)
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentMoleSquare.removeChild(currentMoleSquare.lastChild)
+        console.log("mole removed")
+    }
+    if(moleType === "mole2") {
+        // currentMoleSquare.lastChild.src = "img/greyMouseKO.png"
+        // setTimeout(() => {
+        //     currentMoleSquare.removeChild(currentMoleSquare.lastChild)
+        // }, 500)
+        //currentMoleSquare.removeChild(currentMoleSquare.lastChild)
+        currentMole2Square.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if (gameOver) {
+            return
+        }
+        currentMole2Square.removeChild(currentMole2Square.lastChild)
+    }
+    if(moleType === "greaterMole") {
+        currentGreaterMoleSquare.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentGreaterMoleSquare.removeChild(currentGreaterMoleSquare.lastChild)
+    }
+    if(moleType === "greaterMole2") {
+        currentGreaterMole2Square.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentGreaterMole2Square.removeChild(currentGreaterMole2Square.lastChild)
+    }
+    if(moleType === "goldMole") {
+        currentGoldMoleSquare.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentGoldMoleSquare.removeChild(currentGoldMoleSquare.lastChild)
+    }
+    if(moleType === "timerMole") {
+        currentTimerMoleSquare.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentTimerMoleSquare.removeChild(currentTimerMoleSquare.lastChild)
+    }
+    if(moleType === "multiMole") {
+        currentMultiMoleSquare.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentMultiMoleSquare.removeChild(currentMultiMoleSquare.lastChild)
+    }
+    if(moleType === "badMole") {
+        currentBadMoleSquare.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentBadMoleSquare.removeChild(currentBadMoleSquare.lastChild)
+    }
+    if(moleType === "badMole2") {
+        currentBadMole2Square.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentBadMole2Square.removeChild(currentBadMole2Square.lastChild)
+    }
+    if(moleType === "badMole3") {
+        currentBadMole3Square.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentBadMole3Square.removeChild(currentBadMole3Square.lastChild)
+    }
+    if(moleType === "veryBadMole") {
+        currentVeryBadMoleSquare.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentVeryBadMoleSquare.removeChild(currentVeryBadMoleSquare.lastChild)
+    }
+    if(moleType === "veryBadMole2") {
+        currentVeryBadMole2Square.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentVeryBadMole2Square.removeChild(currentVeryBadMole2Square.lastChild)
+    }
+    if(moleType === "killerMole") {
+        currentKillerMoleSquare.lastChild.classList.add("popDownMole")
+        await delay(500)
+        if(gameOver) {
+            return
+        }
+        currentKillerMoleSquare.removeChild(currentKillerMoleSquare.lastChild)
+    }
+}
+
 function selectSquare() {
     if(gameOver) {
         return
@@ -965,6 +1274,7 @@ function selectSquare() {
         if(moleHit === 1) {
             return
         }
+        currentMoleSquare.lastChild.src = "img/greyMouseKO.png"
         gameScore += 20
         moleHit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -973,6 +1283,7 @@ function selectSquare() {
         if(mole2Hit === 1) {
             return
         }
+        currentMole2Square.lastChild.src = "img/greyMouseKO.png"
         gameScore += 20
         mole2Hit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -981,6 +1292,7 @@ function selectSquare() {
         if(greaterMoleHit === 1) {
             return
         }
+        currentGreaterMoleSquare.lastChild.src = "img/brownMouseKO.png"
         gameScore += 50
         greaterMoleHit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -989,6 +1301,7 @@ function selectSquare() {
         if(greaterMole2Hit === 1) {
             return
         }
+        currentGreaterMole2Square.lastChild.src = "img/brownMouseKO.png"
         gameScore += 50
         greaterMole2Hit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -997,6 +1310,7 @@ function selectSquare() {
         if(goldMoleHit === 1) {
             return
         }
+        currentGoldMoleSquare.lastChild.src = "img/goldMouseKO.png"
         gameScore += 200
         goldMoleHit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -1005,6 +1319,7 @@ function selectSquare() {
         if(timerMoleHit === 1) {
             return
         }
+        currentTimerMoleSquare.lastChild.src = "img/greenMouseKO.png"
         gameScore += 10
         gameTime += 10
         timerMoleHit = 1
@@ -1015,6 +1330,7 @@ function selectSquare() {
         if(multiMoleHit === 10) {
             return
         }
+        currentMultiMoleSquare.lastChild.src = "img/blueMouseKO.png"
         gameScore += 10
         multiMoleHit += 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -1024,6 +1340,7 @@ function selectSquare() {
         if(badMoleHit === 1) {
             return
         }
+        currentBadMoleSquare.lastChild.src = "img/orangeCatKO.png"
         gameScore -= 50
         badMoleHit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -1033,6 +1350,7 @@ function selectSquare() {
         if(badMole2Hit === 1) {
             return
         }
+        currentBadMole2Square.lastChild.src = "img/orangeCatKO.png"
         gameScore -= 50
         badMole2Hit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -1042,6 +1360,7 @@ function selectSquare() {
         if(badMole3Hit === 1) {
             return
         }
+        currentBadMole3Square.lastChild.src = "img/orangeCatKO.png"
         gameScore -= 50
         badMole3Hit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -1051,6 +1370,7 @@ function selectSquare() {
         if(veryBadMoleHit === 1) {
             return
         }
+        currentVeryBadMoleSquare.lastChild.src = "img/redCatKO.png"
         gameScore -= 100
         gameTime -= 20
         veryBadMoleHit = 1
@@ -1066,6 +1386,7 @@ function selectSquare() {
         if(veryBadMole2Hit === 1) {
             return
         }
+        currentVeryBadMole2Square.lastChild.src = "img/redCatKO.png"
         gameScore -= 100
         gameTime -= 20
         veryBadMole2Hit = 1
@@ -1081,6 +1402,7 @@ function selectSquare() {
         if(killerMoleHit === 1) {
             return
         }
+        currentKillerMoleSquare.lastChild.src = "img/purpleCatKO.png"
         gameScore -= 50
         killerMoleHit = 1
         scoreCard.innerText = "SCORE: " + gameScore.toString()
@@ -1106,7 +1428,18 @@ function endGame() {
     }
     clearInterval(intervalEnd)
     clearInterval(intervalMole)
+    clearInterval(intervalMole2)
+    clearInterval(intervalGreaterMole)
+    clearInterval(intervalGreaterMole2)
+    clearInterval(intervalTimerMole)
+    clearInterval(intervalMultiMole)
+    clearInterval(intervalGoldMole)
     clearInterval(intervalBadMole)
+    clearInterval(intervalBadMole2)
+    clearInterval(intervalBadMole3)
+    clearInterval(intervalVeryBadMole)
+    clearInterval(intervalVeryBadMole2)
+    clearInterval(intervalKillerMole)
     scoreCard.innerText = "SCORE: 0"
     gameScore = 0
     gameOver = false
@@ -1119,6 +1452,7 @@ function quitGame() {
     endOptions.style.display = "none"
     instructions.style.display = "inline"
     options.style.display = "inline"
+    //location.reload()
 }
 
 // function startGame() {
