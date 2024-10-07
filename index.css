@@ -2,7 +2,7 @@ body {
     padding: 40px;
     margin: none;
     background: #514e54 ;
-    /* background-image: url("OXODark.png"); */
+    background-image: url("wallpaper/PixabayMoleWallpaper.jpg");
     text-align: center;
     /* font-family: Arial, Helvetica, sans-serif; */
     font-family: 'Comic Neue', cursive;
@@ -53,7 +53,7 @@ button:active {
     margin:auto;
     justify-self: center;
     background: #9c704e;
-    /* background-image: url("OXOMid.png"); */
+    background-image: url("wallpaper/PixabayMoleWood1.jpg");
     max-width: 80%;
     min-width: 400px;
     display: flex;
@@ -79,7 +79,7 @@ button:active {
     padding: 10px;
     background-color: #4f3928;
     background: none;
-    border: solid #4f3928 3px;
+    border: solid black 3px;
     border-radius: 15px;
 }
 
@@ -121,7 +121,7 @@ button:active {
 #options, #end-options {
     background-color: #4f3928;
     background: none;
-    border: solid #4f3928 4px;
+    border: solid black 4px;
     border-radius: 15px;
     padding: 10px;
 }
@@ -256,6 +256,7 @@ button:active {
     width: 300px;
     height: 300px;
     background-color: #a03f00;
+    background-image: url("wallpaper/PixabayMoleWood2.jpg");
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -267,8 +268,9 @@ button:active {
 #grid div {
     width: 100px;
     height: 100px;
-    background-image: url("blank.png");
+    background-image: url("hole.png");
     background-size: cover;
+    cursor: url("cursor/hammerIcon1.png"), pointer;
 }
 
 /* Mole within square */
@@ -280,6 +282,11 @@ button:active {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    cursor: url("cursor/hammerIcon2.png"), pointer;
+}
+
+#grid div img:active {
+    cursor: url("cursor/hammerIcon3.png"), pointer;
 }
 
 .popUpMole, .popDownMole {
@@ -351,7 +358,7 @@ button:active {
     align-items: center;
     background-color: #fdfd96;
     background: none;
-    border: solid #4f3928 3px;
+    border: solid black 3px;
     border-radius: 15px;
 }
 

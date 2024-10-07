@@ -1,5 +1,38 @@
 const clickButton = document.getElementById("click-button")
 const startJingle = document.getElementById("start-jingle")
+const bonkSound = document.getElementById("bonk-sound")
+const bonkSound2 = document.getElementById("bonk-sound-2")
+const bonkSound3 = document.getElementById("bonk-sound-3")
+const bonkSound4 = document.getElementById("bonk-sound-4")
+const bonkSound5 = document.getElementById("bonk-sound-5")
+const bonkSound6 = document.getElementById("bonk-sound-6")
+const bonkSound7 = document.getElementById("bonk-sound-7")
+const bonkSound8 = document.getElementById("bonk-sound-8")
+const bonkSound9 = document.getElementById("bonk-sound-9")
+const bonkSound10 = document.getElementById("bonk-sound-10")
+const bonkSound11 = document.getElementById("bonk-sound-11")
+const bonkSound12 = document.getElementById("bonk-sound-12")
+const bonkSound13 = document.getElementById("bonk-sound-13")
+const mouseScream = document.getElementById("mouse-scream")
+mouseScream.volume = 0.5
+const mouseScream2 = document.getElementById("mouse-scream-2")
+mouseScream2.volume = 0.5
+const mouseScream3 = document.getElementById("mouse-scream-3")
+mouseScream3.volume = 0.5
+const mouseScream4 = document.getElementById("mouse-scream-4")
+mouseScream4.volume = 0.5
+const goldHit = document.getElementById("gold-hit")
+const timerHit = document.getElementById("timer-hit")
+const multiHit = document.getElementById("multi-hit")
+const catScream = document.getElementById("cat-scream")
+catScream.volume = 0.5
+const catScream2 = document.getElementById("cat-scream-2")
+catScream2.volume = 0.5
+const catScream3 = document.getElementById("cat-scream-3")
+catScream3.volume = 0.5
+const catScream4 = document.getElementById("cat-scream-4")
+const catScream5 = document.getElementById("cat-scream-5")
+const catScream6 = document.getElementById("cat-scream-6")
 
 // const instructions = document.getElementById("instructions")
 // const mobileInfo = document.getElementById("mobile-instructions")
@@ -1274,6 +1307,8 @@ function selectSquare() {
         if(moleHit === 1) {
             return
         }
+        bonkSound.play()
+        mouseScream.play()
         currentMoleSquare.lastChild.src = "img/greyMouseKO.png"
         gameScore += 20
         moleHit = 1
@@ -1283,6 +1318,8 @@ function selectSquare() {
         if(mole2Hit === 1) {
             return
         }
+        bonkSound2.play()
+        mouseScream2.play()
         currentMole2Square.lastChild.src = "img/greyMouseKO.png"
         gameScore += 20
         mole2Hit = 1
@@ -1292,6 +1329,8 @@ function selectSquare() {
         if(greaterMoleHit === 1) {
             return
         }
+        bonkSound3.play()
+        mouseScream3.play()
         currentGreaterMoleSquare.lastChild.src = "img/brownMouseKO.png"
         gameScore += 50
         greaterMoleHit = 1
@@ -1301,6 +1340,8 @@ function selectSquare() {
         if(greaterMole2Hit === 1) {
             return
         }
+        bonkSound4.play()
+        mouseScream4.play()
         currentGreaterMole2Square.lastChild.src = "img/brownMouseKO.png"
         gameScore += 50
         greaterMole2Hit = 1
@@ -1310,6 +1351,8 @@ function selectSquare() {
         if(goldMoleHit === 1) {
             return
         }
+        bonkSound5.play()
+        goldHit.play()
         currentGoldMoleSquare.lastChild.src = "img/goldMouseKO.png"
         gameScore += 200
         goldMoleHit = 1
@@ -1319,6 +1362,8 @@ function selectSquare() {
         if(timerMoleHit === 1) {
             return
         }
+        bonkSound6.play()
+        timerHit.play()
         currentTimerMoleSquare.lastChild.src = "img/greenMouseKO.png"
         gameScore += 10
         gameTime += 10
@@ -1330,6 +1375,8 @@ function selectSquare() {
         if(multiMoleHit === 10) {
             return
         }
+        bonkSound7.play()
+        multiHit.play()
         currentMultiMoleSquare.lastChild.src = "img/blueMouseKO.png"
         gameScore += 10
         multiMoleHit += 1
@@ -1340,6 +1387,8 @@ function selectSquare() {
         if(badMoleHit === 1) {
             return
         }
+        bonkSound8.play()
+        catScream.play()
         currentBadMoleSquare.lastChild.src = "img/orangeCatKO.png"
         gameScore -= 50
         badMoleHit = 1
@@ -1350,6 +1399,8 @@ function selectSquare() {
         if(badMole2Hit === 1) {
             return
         }
+        bonkSound9.play()
+        catScream2.play()
         currentBadMole2Square.lastChild.src = "img/orangeCatKO.png"
         gameScore -= 50
         badMole2Hit = 1
@@ -1360,6 +1411,8 @@ function selectSquare() {
         if(badMole3Hit === 1) {
             return
         }
+        bonkSound10.play()
+        catScream3.play()
         currentBadMole3Square.lastChild.src = "img/orangeCatKO.png"
         gameScore -= 50
         badMole3Hit = 1
@@ -1370,6 +1423,8 @@ function selectSquare() {
         if(veryBadMoleHit === 1) {
             return
         }
+        bonkSound11.play()
+        catScream4.play()
         currentVeryBadMoleSquare.lastChild.src = "img/redCatKO.png"
         gameScore -= 100
         gameTime -= 20
@@ -1386,6 +1441,8 @@ function selectSquare() {
         if(veryBadMole2Hit === 1) {
             return
         }
+        bonkSound12.play()
+        catScream5.play()
         currentVeryBadMole2Square.lastChild.src = "img/redCatKO.png"
         gameScore -= 100
         gameTime -= 20
@@ -1402,6 +1459,8 @@ function selectSquare() {
         if(killerMoleHit === 1) {
             return
         }
+        bonkSound13.play()
+        catScream6.play()
         currentKillerMoleSquare.lastChild.src = "img/purpleCatKO.png"
         gameScore -= 50
         killerMoleHit = 1
