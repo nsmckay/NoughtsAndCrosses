@@ -139,6 +139,16 @@
                         <input type="checkbox" id="cheat-box" name="cheat-box" value="cheat">
                     </div> -->
                     <button id="start-game">START</button>
+                    <button id="show-highscores">HISCORES</button>
+                </div>
+                <div id="highscores">
+                    <p><b>HIGH SCORES</b></p>
+                    <p id="score-display-easy"><b>Easy:</b> 0 points</p>
+                    <p id="score-display-medium"><b>Medium:</b> 0 points</p>
+                    <p id="score-display-hard"><b>Hard:</b> 0 points</p>
+                    <p><i>Double click Erase to delete your scores!</i></p>
+                    <button id="return-from-scores">GO BACK</button>
+                    <button id="delete-scores">ERASE SCORE</button>
                 </div>
                 <div id="game-board">
                     <span id="board-header" class="board-header-duo">
@@ -148,7 +158,10 @@
                     <div id="grid"></div>
                 </div>
                 <div id="end-options">
-                    <img src="cross.png">
+                    <p id="congrats"><b>GAME OVER</b></p>
+                    <img id="congrats-photo" src="cross.png">
+                    <p id="your-score">YOUR SCORE: 0</p>
+                    <p id="new-highscore">NEW HIGHSCORE!</p>
                     <div id="end-option-buttons">
                         <!-- <button id="continue">CONTINUE</button> -->
                         <button id="continue">PLAY AGAIN</button>

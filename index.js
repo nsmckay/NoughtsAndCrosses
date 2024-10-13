@@ -58,12 +58,23 @@ const radioEasy = document.getElementById("difficulty-easy")
 const radioMedium = document.getElementById("difficulty-medium")
 const radioHard = document.getElementById("difficulty-hard")
 const startButton = document.getElementById("start-game")
+const scoreButton = document.getElementById("show-highscores")
+const highscores = document.getElementById("highscores")
+const scoreDisplayEasy = document.getElementById("score-display-easy")
+const scoreDisplayMedium = document.getElementById("score-display-medium")
+const scoreDisplayHard = document.getElementById("score-display-hard")
+const returnFromScores = document.getElementById("return-from-scores")
+const deleteScores = document.getElementById("delete-scores")
 const gameBoard = document.getElementById("game-board")
 const boardHeader = document.getElementById("board-header")
 const grid = document.getElementById("grid")
 const scoreCard = document.getElementById("score-card")
 const timeCard = document.getElementById("time-card")
 const endOptions = document.getElementById("end-options")
+const congrats = document.getElementById("congrats")
+const congratsPhoto = document.getElementById("congrats-photo")
+const yourScore = document.getElementById("your-score")
+const newHighscore = document.getElementById("new-highscore")
 const quitButton = document.getElementById("retry")
 const playAgainButton = document.getElementById("continue")
 const message = document.getElementById("message")
@@ -88,6 +99,9 @@ let currentVeryBadMoleSquare
 let currentVeryBadMole2Square
 let currentKillerMoleSquare
 let gameScore = 0;
+let highScoreEasy = 0;
+let highScoreMedium = 0;
+let highScoreHard = 0;
 let gameTime = 0;
 let gameOver = false
 let moleHit = 0
@@ -130,6 +144,9 @@ radioEasy.addEventListener("click", updateDifficulty)
 radioMedium.addEventListener("click", updateDifficulty)
 radioHard.addEventListener("click", updateDifficulty)
 startButton.addEventListener("click", startGame)
+scoreButton.addEventListener("click", showHighscores)
+returnFromScores.addEventListener("click", returnToMainMenu)
+deleteScores.addEventListener("dblclick", eraseHighscores)
 quitButton.addEventListener("click", quitGame)
 playAgainButton.addEventListener("click", startGame)
 
@@ -138,8 +155,10 @@ playAgainButton.addEventListener("click", startGame)
 // gameBoard.style.display = "none"
 // endOptions.style.display = "none"
 options.style.display = "inline" //before starting game, only want options visible
+highscores.style.display = "none"
 gameBoard.style.display = "none"
 endOptions.style.display = "none"
+newHighscore.style.display = "none"
 
 // function updateInstructions() {
 //     clickButton.play()
@@ -161,6 +180,16 @@ endOptions.style.display = "none"
 const delay = ms => new Promise(res => setTimeout(res, ms)); //utility function for synchronous delay
 //thanks to https://stackoverflow.com/questions/14226803/wait-5-seconds-before-executing-next-line
 
+if(localStorage.getItem("storeEasy") != null) { //if local storage already storing highscore
+    highScoreEasy = localStorage.getItem("storeEasy") //restore highscore from last session
+}
+if(localStorage.getItem("storeMedium") != null) {
+    highScoreMedium = localStorage.getItem("storeMedium")
+}
+if(localStorage.getItem("storeHard") != null) {
+    highScoreHard = localStorage.getItem("storeHard")
+}
+
 function updateDifficulty() {
     clickButton.play()
     if(radioEasy.checked) {
@@ -173,6 +202,32 @@ function updateDifficulty() {
     //console.log(gameDifficulty)
 }
 
+function showHighscores() {
+    clickButton.play()
+    highscores.style.display = "inline"
+    options.style.display = "none"
+    scoreDisplayEasy.innerHTML = "<b>Easy:</b> " + highScoreEasy + " points"
+    scoreDisplayMedium.innerHTML = "<b>Medium:</b> " + highScoreMedium + " points"
+    scoreDisplayHard.innerHTML = "<b>Hard:</b> " + highScoreHard + " points"
+}
+
+function eraseHighscores() {
+    clickButton.play()
+    highScoreEasy = 0
+    highScoreMedium = 0
+    highScoreHard = 0
+    localStorage.clear()
+    scoreDisplayEasy.innerHTML = "<b>Easy:</b> " + highScoreEasy + " points"
+    scoreDisplayMedium.innerHTML = "<b>Medium:</b> " + highScoreMedium + " points"
+    scoreDisplayHard.innerHTML = "<b>Hard:</b> " + highScoreHard + " points"
+}
+
+function returnToMainMenu() {
+    clickButton.play()
+    options.style.display = "inline"
+    highscores.style.display = "none"
+}
+
 function startGame() {
     startJingle.play()
     gameTitle.style.display = "none"
@@ -180,6 +235,9 @@ function startGame() {
     options.style.display = "none"
     gameBoard.style.display = "inline"
     endOptions.style.display = "none"
+    newHighscore.style.display = "none"
+    scoreCard.innerText = "SCORE: 0"
+    gameScore = 0
     setGame()
 }
 
@@ -1499,18 +1557,77 @@ function endGame() {
     clearInterval(intervalVeryBadMole)
     clearInterval(intervalVeryBadMole2)
     clearInterval(intervalKillerMole)
-    scoreCard.innerText = "SCORE: 0"
-    gameScore = 0
+    //scoreCard.innerText = "SCORE: 0"
+    //gameScore = 0
+    yourScore.innerHTML = "YOUR SCORE: " + gameScore + " points"
+    if (gameDifficulty === 2) {
+        //update highscore for hard difficulty if new score higher
+        if(gameScore > highScoreHard) {
+            highScoreHard = gameScore
+            newHighscore.style.display = "inline"
+            localStorage.setItem("storeHard", gameScore)
+        }
+        //congratulatory message depending on performance
+        if(gameScore > 3500) {
+            congrats.innerHTML = "AMAZING JOB!"
+            congratsPhoto.src = "img/victory3.jpg"
+        } else if (gameScore > 2000) {
+            congrats.innerHTML = "NOT BAD!"
+            congratsPhoto.src = "img/victory2.jpg"
+        } else {
+            congrats.innerHTML = "YOU CAN DO BETTER"
+            congratsPhoto.src = "img/victory1.jpg"
+        }
+    } else if (gameDifficulty === 1) {
+        //update highscore for medium difficulty if new score higher
+        if(gameScore > highScoreMedium) {
+            highScoreMedium = gameScore
+            newHighscore.style.display = "inline"
+            localStorage.setItem("storeMedium", gameScore)
+        }
+        //congratulatory message depending on performance
+        if(gameScore > 1000) {
+            congrats.innerHTML = "AMAZING JOB!"
+            congratsPhoto.src = "img/victory3.jpg"
+        } else if (gameScore > 800) {
+            congrats.innerHTML = "NOT BAD!"
+            congratsPhoto.src = "img/victory2.jpg"
+        } else {
+            congrats.innerHTML = "YOU CAN DO BETTER"
+            congratsPhoto.src = "img/victory1.jpg"
+        }
+    } else {
+        //update highscore for easy difficulty if new score higher
+        if(gameScore > highScoreEasy) {
+            highScoreEasy = gameScore
+            newHighscore.style.display = "inline"
+            localStorage.setItem("storeEasy", gameScore)
+        }
+        //congratulatory message depending on performance
+        if(gameScore > 250) {
+            congrats.innerHTML = "AMAZING JOB!"
+            congratsPhoto.src = "img/victory3.jpg"
+        } else if (gameScore > 150) {
+            congrats.innerHTML = "NOT BAD!"
+            congratsPhoto.src = "img/victory2.jpg"
+        } else {
+            congrats.innerHTML = "YOU CAN DO BETTER"
+            congratsPhoto.src = "img/victory1.jpg"
+        }
+    }
     gameOver = false
     endOptions.style.display = "inline"
     gameTitle.style.display = "inline"
 }
 
 function quitGame() {
+    scoreCard.innerText = "SCORE: 0"
+    gameScore = 0
     console.log("quit")
     endOptions.style.display = "none"
     instructions.style.display = "inline"
     options.style.display = "inline"
+    newHighscore.style.display = "none"
     //location.reload()
 }
 

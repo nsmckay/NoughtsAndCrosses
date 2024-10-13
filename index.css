@@ -79,6 +79,7 @@ button:active {
     padding: 10px;
     background-color: #4f3928;
     background: none;
+    background-image: url("wallpaper/PixabayMoleWood2.jpg");
     border: solid black 3px;
     border-radius: 15px;
 }
@@ -118,9 +119,9 @@ button:active {
     margin-bottom: 30px;
 }
 
-#options, #end-options {
+#options, #end-options, #highscores {
     background-color: #4f3928;
-    background: none;
+    background-image: url("wallpaper/PixabayMoleWood2.jpg");
     border: solid black 4px;
     border-radius: 15px;
     padding: 10px;
@@ -138,6 +139,8 @@ button:active {
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    width: 150px;
+    height: 150px;
 }
 
 #options p {
@@ -148,7 +151,7 @@ button:active {
     margin-top: 10px;
 }
 
-#start-game, #retry, #retry-mini, #continue, #continue-mini {
+#start-game, #retry, #retry-mini, #continue, #continue-mini, #show-highscores, #return-from-scores, #delete-scores {
     margin: 10px;
     height: 30px;
     width: 90px;
@@ -157,19 +160,19 @@ button:active {
     font-weight: bold;
 }
 
-#start-game {
+#start-game, #return-from-scores {
     background-color: lime;
     background-image: linear-gradient(to bottom right, lime, darkgreen);
 }
 
-#start-game:hover {
+#start-game:hover, #return-from-scores:hover {
     color: lime;
     background-color: white;
     background-image: none;
     cursor: pointer;
 }
 
-#start-game:active {
+#start-game:active, #return-from-scores:active {
     color: lime;
     background-color: black;
     background-image: none;
@@ -177,20 +180,20 @@ button:active {
     border-color: lime;
 }
 
-#retry, #retry-mini {
+#retry, #retry-mini, #delete-scores {
     background-color: red;
     background-image: linear-gradient(to bottom right, red, darkred);
     width: 120px;
 }
 
-#retry:hover, #retry-mini:hover {
+#retry:hover, #retry-mini:hover, #delete-scores:hover {
     color: red;
     background-color: white;
     background-image: none;
     cursor: pointer;
 }
 
-#retry:active, #retry-mini:active {
+#retry:active, #retry-mini:active, #delete-scores:active {
     color: red;
     background-color: black;
     background-image: none;
@@ -223,6 +226,27 @@ button:active {
     color: gray;
     background-color: lightgray;
     cursor: not-allowed;
+}
+
+#show-highscores {
+    background-color: orange;
+    background-image: linear-gradient(to bottom right, orange, #a03f00);
+    /*width: 120px;*/
+}
+
+#show-highscores:hover{
+    color: orange;
+    background-color: white;
+    background-image: none;
+    cursor: pointer;
+}
+
+#show-highscores:active {
+    color: orange;
+    background-color: black;
+    background-image: none;
+    cursor: pointer;
+    border-color: orange;
 }
 
 /* #game-board {
@@ -358,6 +382,7 @@ button:active {
     align-items: center;
     background-color: #fdfd96;
     background: none;
+    background-image: url("wallpaper/PixabayMoleWood2.jpg");
     border: solid black 3px;
     border-radius: 15px;
 }
