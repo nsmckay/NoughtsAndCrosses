@@ -64,6 +64,7 @@ button:active {
     display: flex;
     flex-direction: row;
     align-self: center;
+    font-size: 20px;
 }
 
 #info-container {
@@ -79,7 +80,7 @@ button:active {
     padding: 10px;
     background-color: #4f3928;
     background: none;
-    background-image: url("wallpaper/PixabayMoleWood2.jpg");
+    background-image: url("wallpaper/PixabayMoleWood3.jpg");
     border: solid black 3px;
     border-radius: 15px;
 }
@@ -119,9 +120,9 @@ button:active {
     margin-bottom: 30px;
 }
 
-#options, #end-options, #highscores {
+#options, #end-options, #tutorial, #highscores {
     background-color: #4f3928;
-    background-image: url("wallpaper/PixabayMoleWood2.jpg");
+    background-image: url("wallpaper/PixabayMoleWood3.jpg");
     border: solid black 4px;
     border-radius: 15px;
     padding: 10px;
@@ -145,13 +146,31 @@ button:active {
 
 #options p {
     margin-top: 0px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#highscores h3 {
+    text-decoration: underline;
 }
 
 #difficulty-option {
     margin-top: 10px;
 }
 
-#start-game, #retry, #retry-mini, #continue, #continue-mini, #show-highscores, #return-from-scores, #delete-scores {
+#tutorial {
+    margin: 30px;
+}
+
+#tutorial ul {
+    text-align: left;
+}
+
+#tutorial li {
+    line-height: 1.5;
+}
+
+#start-game, #help, #end-now, #retry, #retry-mini, #continue, #continue-mini, #show-highscores, #return-from-scores, #delete-scores {
     margin: 10px;
     height: 30px;
     width: 90px;
@@ -180,25 +199,33 @@ button:active {
     border-color: lime;
 }
 
-#retry, #retry-mini, #delete-scores {
+#end-now, #retry, #retry-mini, #delete-scores {
     background-color: red;
     background-image: linear-gradient(to bottom right, red, darkred);
     width: 120px;
 }
 
-#retry:hover, #retry-mini:hover, #delete-scores:hover {
+#end-now:hover, #retry:hover, #retry-mini:hover, #delete-scores:hover {
     color: red;
     background-color: white;
     background-image: none;
     cursor: pointer;
 }
 
-#retry:active, #retry-mini:active, #delete-scores:active {
+#end-now:active, #retry:active, #retry-mini:active, #delete-scores:active {
     color: red;
     background-color: black;
     background-image: none;
     cursor: pointer;
     border-color: red;
+}
+
+#end-now {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 50px;
+    box-shadow: 1px 2px 1px black;
 }
 
 #continue, #continue-mini {
@@ -292,7 +319,7 @@ button:active {
 #grid div {
     width: 100px;
     height: 100px;
-    background-image: url("hole.png");
+    background-image: url("hole2.png");
     background-size: cover;
     cursor: url("cursor/hammerIcon1.png"), pointer;
 }
@@ -311,6 +338,21 @@ button:active {
 
 #grid div img:active {
     cursor: url("cursor/hammerIcon3.png"), pointer;
+}
+
+.big-grid {
+    width: 300px;
+    height: 300px;
+}
+
+.big-grid div {
+    width: 100px;
+    height: 100px;
+}
+
+.big-grid div img {
+    width: 100px;
+    height: 100px;
 }
 
 .popUpMole, .popDownMole {
@@ -361,13 +403,39 @@ button:active {
     background-size: cover;
 }
 
-#retry, #retry-mini, #continue, #continue-mini {
+#help {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: grey;
+    background-image: linear-gradient(to bottom right, lightgray, grey);
+    padding: 0%;
+    width: 120px;
+    box-shadow: 1px 2px 1px black;
+}
+
+#help:hover {
+    color: grey;
+    background-color: white;
+    background-image: none;
+    cursor: pointer;
+}
+
+#help:active {
+    color: grey;
+    background-color: black;
+    background-image: none;
+    cursor: pointer;
+    border-color: grey;
+}
+
+#help, #end-now #retry, #retry-mini, #continue, #continue-mini {
     height: 30px;
 }
 
-#retry-mini, #continue-mini {
+#help, #end-now #retry-mini, #continue-mini {
     margin-top: 10px;
-    width: 30px;
+    width: 60px;
     border-radius: 5px;
 }
 
@@ -382,7 +450,7 @@ button:active {
     align-items: center;
     background-color: #fdfd96;
     background: none;
-    background-image: url("wallpaper/PixabayMoleWood2.jpg");
+    background-image: url("wallpaper/PixabayMoleWood3.jpg");
     border: solid black 3px;
     border-radius: 15px;
 }
@@ -451,8 +519,15 @@ button:active {
     h1 {
         font-size: 50px;
     }
+    body {
+        padding: 30px;
+        padding-top: 80px;
+    }
+    #container {
+        max-width: 90%;
+    }
     #instructions, #mobile-instructions {
-        font-size: 14px;
+        font-size: 18px;
     }
     /* #mobile-instructions {
         display: none;
@@ -486,8 +561,15 @@ button:active {
     h1 {
         font-size: 45px;
     }
+    body {
+        padding: 20px;
+        padding-top: 80px;
+    }
+    #container {
+        max-width: 100%;
+    }
     #instructions, #mobile-instructions {
-        font-size: 12px;
+        font-size: 16px;
     }
     /* #instructions {
         display: none;
@@ -502,6 +584,10 @@ button:active {
         padding: 10px;
         padding-bottom: 0px;
     }
+    .not-mobile-friendly {
+        pointer-events: none;
+        opacity: 50%;
+    }
     /* #mouse, #cat{
         height: 60px;
         width: 60px;
@@ -509,5 +595,17 @@ button:active {
     #mouse img, #cat img {
         max-height: 80px;
         max-width: 80px;
+    }
+    .big-grid {
+        width: 300px;
+        height: 300px;
+    }
+    .big-grid div {
+        width: 60px;
+        height: 60px;
+    }
+    .big-grid div img {
+        width: 60px;
+        height: 60px;
     } */
   }

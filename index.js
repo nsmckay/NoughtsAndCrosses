@@ -53,6 +53,9 @@ const catScream6 = document.getElementById("cat-scream-6")
 // const cat = document.getElementById("cat")
 const gameTitle = document.getElementById("game-title")
 const instructions = document.getElementById("instructions")
+const help = document.getElementById("help")
+const tutorial = document.getElementById("tutorial")
+const gameArea = document.getElementById("game-area")
 const options = document.getElementById("options")
 const radioEasy = document.getElementById("difficulty-easy")
 const radioMedium = document.getElementById("difficulty-medium")
@@ -70,6 +73,7 @@ const boardHeader = document.getElementById("board-header")
 const grid = document.getElementById("grid")
 const scoreCard = document.getElementById("score-card")
 const timeCard = document.getElementById("time-card")
+const endNow = document.getElementById("end-now")
 const endOptions = document.getElementById("end-options")
 const congrats = document.getElementById("congrats")
 const congratsPhoto = document.getElementById("congrats-photo")
@@ -84,7 +88,8 @@ const message = document.getElementById("message")
 // let gameStart = false
 // let gameOver = false
 
-let gameDifficulty = 0; //easy
+let helpMode = 0
+let gameDifficulty = 0 //easy
 let currentMoleSquare
 let currentMole2Square
 let currentGreaterMoleSquare
@@ -98,11 +103,11 @@ let currentBadMole3Square
 let currentVeryBadMoleSquare
 let currentVeryBadMole2Square
 let currentKillerMoleSquare
-let gameScore = 0;
-let highScoreEasy = 0;
-let highScoreMedium = 0;
-let highScoreHard = 0;
-let gameTime = 0;
+let gameScore = 0
+let highScoreEasy = 0
+let highScoreMedium = 0
+let highScoreHard = 0
+let gameTime = 0
 let gameOver = false
 let moleHit = 0
 let intervalMole
@@ -140,6 +145,7 @@ let intervalEnd
 // retry.disabled = true
 // miniRetry.addEventListener("click", startOver)
 // continueG.addEventListener("click", continueGame)
+help.addEventListener("click", showTutorial)
 radioEasy.addEventListener("click", updateDifficulty)
 radioMedium.addEventListener("click", updateDifficulty)
 radioHard.addEventListener("click", updateDifficulty)
@@ -147,6 +153,7 @@ startButton.addEventListener("click", startGame)
 scoreButton.addEventListener("click", showHighscores)
 returnFromScores.addEventListener("click", returnToMainMenu)
 deleteScores.addEventListener("dblclick", eraseHighscores)
+endNow.addEventListener("click", gameOverNow)
 quitButton.addEventListener("click", quitGame)
 playAgainButton.addEventListener("click", startGame)
 
@@ -154,8 +161,12 @@ playAgainButton.addEventListener("click", startGame)
 // options.style.display = "inline" //before starting game, only want options visible
 // gameBoard.style.display = "none"
 // endOptions.style.display = "none"
+instructions.style.display = "inline"
+gameArea.style.display = "flex"
 options.style.display = "inline" //before starting game, only want options visible
+tutorial.style.display = "none"
 highscores.style.display = "none"
+endNow.style.display = "none"
 gameBoard.style.display = "none"
 endOptions.style.display = "none"
 newHighscore.style.display = "none"
@@ -202,6 +213,20 @@ function updateDifficulty() {
     //console.log(gameDifficulty)
 }
 
+function showTutorial() {
+    if (helpMode === 0) {
+        clickButton.play()
+        tutorial.style.display = "inline"
+        instructions.style.display = "none"
+        gameArea.style.display = "none"
+        message.innerText = "Click HELP again to return to the Main Menu"
+        helpMode = 1
+    } else {
+        helpMode = 0
+        returnToMainMenu()
+    }
+}
+
 function showHighscores() {
     clickButton.play()
     highscores.style.display = "inline"
@@ -209,6 +234,7 @@ function showHighscores() {
     scoreDisplayEasy.innerHTML = "<b>Easy:</b> " + highScoreEasy + " points"
     scoreDisplayMedium.innerHTML = "<b>Medium:</b> " + highScoreMedium + " points"
     scoreDisplayHard.innerHTML = "<b>Hard:</b> " + highScoreHard + " points"
+    message.innerText = "Keep replaying each difficulty to maximise your score for each level"
 }
 
 function eraseHighscores() {
@@ -224,14 +250,21 @@ function eraseHighscores() {
 
 function returnToMainMenu() {
     clickButton.play()
+    instructions.style.display = "inline"
+    gameArea.style.display = "flex"
     options.style.display = "inline"
+    tutorial.style.display = "none"
     highscores.style.display = "none"
+    message.innerText = "Select your desired difficulty, and click START to begin!"
 }
 
 function startGame() {
     startJingle.play()
+    message.innerText = "Click to hit the rats! DON'T hit the cats!"
     gameTitle.style.display = "none"
     instructions.style.display = "none"
+    help.style.display = "none"
+    endNow.style.display = "inline"
     options.style.display = "none"
     gameBoard.style.display = "inline"
     endOptions.style.display = "none"
@@ -255,6 +288,8 @@ function setGame() {
         // grid.setAttribute("style", "height:500px")
         grid.style.width = 500
         grid.style.height = 500
+        //grid.classList.add("big-grid")
+        console.log(grid.classList)
         for(let i = 0; i < 25; i++) {
             let moleSquare = document.createElement("div")
             moleSquare.id = i.toString()
@@ -1528,12 +1563,15 @@ function selectSquare() {
 }
 
 function gameOverNow() {
+    clickButton.play()
     scoreCard.innerText = "GAME OVER: " + gameScore.toString()
+    message.innerText = "Let's see how you did, shall we?"
     clearInterval(intervalTime)
     boardHeader.classList.remove("board-header-duo") //only want to display the GAME OVER now, so switch to mono
     boardHeader.classList.add("board-header-mono")
     timeCard.innerText = ""
     timeCard.display = "none"
+    endNow.style.display = "none"
     gameOver = true
     intervalEnd = setInterval(endGame, 3000) //after 3 seconds, bring up the end game options
 }
@@ -1615,17 +1653,22 @@ function endGame() {
             congratsPhoto.src = "img/victory1.jpg"
         }
     }
+    message.innerText = "Try playing again to beat your highest score!"
     gameOver = false
     endOptions.style.display = "inline"
     gameTitle.style.display = "inline"
 }
 
 function quitGame() {
+    clickButton.play()
+    message.innerText = "Select your desired difficulty, and click START to begin!"
     scoreCard.innerText = "SCORE: 0"
     gameScore = 0
     console.log("quit")
     endOptions.style.display = "none"
     instructions.style.display = "inline"
+    help.style.display = "inline"
+    endNow.style.display = "none"
     options.style.display = "inline"
     newHighscore.style.display = "none"
     //location.reload()

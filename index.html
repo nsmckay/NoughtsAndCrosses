@@ -102,6 +102,7 @@
         </audio>
 
         <div id="container">
+            <button id="help">HELP</button>
             <h1 id="game-title">WHACK A RAT!</h1>
             <div id="info">
                 <div id="info-container">
@@ -115,16 +116,47 @@
                 </div>
                 <!-- <button id="retry-mini">←</button> -->
             </div>
+            <div id="tutorial">
+                <h2>MANUAL</h2>
+                <h3>How to Play</h3>
+                <ul>
+                    <li>Select a Difficulty Level to start the game. Each level lasts longer than the last, and has increasingly complex game mechanics.</li>
+                    <li>Click on rats to hit them with your hammer. The more you KO, the more points you will receive. Try to get as high a score as possible!</li>
+                    <li>Avoid hitting cats, because doing so will reduce your score and/or your remaining time.</li>
+                    <li>The game ends when you run out of time, or you hit a Purple Cat. You can view your High Scores from the Main Menu.</li>
+                </ul>
+                <h3>Difficulty Levels</h3>
+                <ul>
+                    <li>EASY: A short game with a simple 3X3 grid. Only the standard Rats and Cats will make an appearance.</li>
+                    <li>MEDIUM: An average length game on a 4X4 grid. Greater Rats can be hit for extra points, but Red Cats will reduce your Time if you hit them.</li>
+                    <li>HARD: A long game on a large 5X5 grid. Timer Rats, Rubber Rats, and Gold Rats are thrown into the mix to make the game more complex, and the deadly Purple Cat may end your game early.</li>
+                    <p><i>Note - Due to the size of the grid, hard mode is currently not playable on mobile devices with smaller screen resolutions. This will be fixed in a future update.</i></p>
+                </ul>
+                <h3>Rat Types</h3>
+                <ul>
+                    <li>Standard Rat (Gray) - Your typical slow, common rat. Defeat for 20 points.</li>
+                    <li>Greater Rat (Brown) - A quicker, smarter rat than the common kind. Defeat for 50 points.</li>
+                    <li>Timer Rat (Green) - A rare rat that will boost your Time if you hit it. Defeat for 10 points.</li>
+                    <li>Rubber Rat (Blue) - A rare rat that can be hit by your hammer multiple times. You'll earn 10 points per hit.</li>
+                    <li>Gold Rat (Yellow) - The rarest of all rats. Defeat it for a whopping 200 points!</li>
+                </ul>
+                <h3>Cat Types</h3>
+                <ul>
+                    <li>Standard Cat (Orange) - An ordinary cat, that will reduce your score by 50 points if you mistakenly hit it.</li>
+                    <li>Bad Cat (Red) - A more vicious feline, that will reduce your score by 100 points if you hit it, as well as take away 20 seconds from your Time!</li>
+                    <li>Killer Cat (Purple) - The most dangerous of all kitties! Hitting this cat will immediately end your game, as well as deducting 50 points.</li>
+                </ul>
+            </div>
             <div id="game-area">
                 <div id="options">
-                    <p><b>Difficulty Level:</b></p>
+                    <p>Difficulty Level:</p>
                     <div id="radio">
                         <input type="radio" id="difficulty-easy" name="difficulty" value="easy" checked>
                         <label for="difficulty-easy">Easy</label>
                         <input type="radio" id="difficulty-medium" name="difficulty" value="medium">
                         <label for="difficulty-medium">Medium</label>
-                        <input type="radio" id="difficulty-hard" name="difficulty" value="hard">
-                        <label for="difficulty-hard">Hard</label>
+                        <input type="radio" id="difficulty-hard" class="not-mobile-friendly" name="difficulty" value="hard">
+                        <label class="not-mobile-friendly" for="difficulty-hard">Hard</label>
                     </div>
                     <!-- <div id="difficulty-option">
                         <label for="difficulty-slider">Difficulty</label>
@@ -142,7 +174,7 @@
                     <button id="show-highscores">HISCORES</button>
                 </div>
                 <div id="highscores">
-                    <p><b>HIGH SCORES</b></p>
+                    <h3>HIGH SCORES</h3>
                     <p id="score-display-easy"><b>Easy:</b> 0 points</p>
                     <p id="score-display-medium"><b>Medium:</b> 0 points</p>
                     <p id="score-display-hard"><b>Hard:</b> 0 points</p>
@@ -150,6 +182,7 @@
                     <button id="return-from-scores">GO BACK</button>
                     <button id="delete-scores">ERASE SCORE</button>
                 </div>
+                <button id="end-now">END</button>
                 <div id="game-board">
                     <span id="board-header" class="board-header-duo">
                         <h2 id="score-card">SCORE: 0</h2>
