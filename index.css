@@ -73,7 +73,7 @@ button:active {
     align-items: center;
 }
 
-#instructions, #mobile-instructions {
+#instructions {
     margin-left: 10%;
     margin-right: 10%;
     margin-bottom: 30px;
@@ -83,32 +83,6 @@ button:active {
     background-image: url("wallpaper/PixabayMoleWood3.jpg");
     border: solid black 3px;
     border-radius: 15px;
-}
-
-#mobile-instructions-button {
-    margin: 10px;
-    height: 30px;
-    width: 90px;
-    border: 3px solid black;
-    border-radius: 10px;
-    font-weight: bold;
-    background-color: orange;
-    background-image: linear-gradient(to bottom right, orange, #a03f00);
-}
-
-#mobile-instructions-button:hover {
-    color: orange;
-    background-color: white;
-    background-image: none;
-    cursor: pointer;
-}
-
-#mobile-instructions-button:active {
-    color: orange;
-    background-color: black;
-    background-image: none;
-    cursor: pointer;
-    border-color: orange;
 }
 
 #game-area {
@@ -170,7 +144,7 @@ button:active {
     line-height: 1.5;
 }
 
-#start-game, #help, #end-now, #retry, #retry-mini, #continue, #continue-mini, #show-highscores, #return-from-scores, #delete-scores {
+#start-game, #help, #end-now, #retry, #continue, #show-highscores, #return-from-scores, #delete-scores {
     margin: 10px;
     height: 30px;
     width: 90px;
@@ -199,20 +173,20 @@ button:active {
     border-color: lime;
 }
 
-#end-now, #retry, #retry-mini, #delete-scores {
+#end-now, #retry, #delete-scores {
     background-color: red;
     background-image: linear-gradient(to bottom right, red, darkred);
     width: 120px;
 }
 
-#end-now:hover, #retry:hover, #retry-mini:hover, #delete-scores:hover {
+#end-now:hover, #retry:hover, #delete-scores:hover {
     color: red;
     background-color: white;
     background-image: none;
     cursor: pointer;
 }
 
-#end-now:active, #retry:active, #retry-mini:active, #delete-scores:active {
+#end-now:active, #retry:active, #delete-scores:active {
     color: red;
     background-color: black;
     background-image: none;
@@ -228,20 +202,20 @@ button:active {
     box-shadow: 1px 2px 1px black;
 }
 
-#continue, #continue-mini {
+#continue {
     background-color: lime;
     background-image: linear-gradient(to bottom right, lime, darkgreen);
     width: 120px;
 }
 
-#continue:hover, #continue-mini:hover {
+#continue:hover {
     color: lime;
     background-color: white;
     background-image: none;
     cursor: pointer;
 }
 
-#continue:active, #continue-mini:active {
+#continue:active {
     color: lime;
     background-color: black;
     background-image: none;
@@ -374,27 +348,6 @@ button:active {
         bottom: 0%;}
 }
 
-/* .popStayMole {
-    animation-name: popStay;
-    animation-duration: 500ms;
-    animation-fill-mode: backwards;
-    animation-iteration-count: infinite;
-    position: relative;
-} */
-
-/* @keyframes popStay {
-    0% {height: 100%}
-    100% {height: 100%;}
-} */
-
-.pauseMole {
-    height: 100%;
-    -webkit-animation-play-state:paused;
-    -moz-animation-play-state:paused;
-    -o-animation-play-state:paused; 
-    animation-play-state:paused;
-}
-
 .square {
     margin: 5px;
     background-color: white;
@@ -429,11 +382,11 @@ button:active {
     border-color: grey;
 }
 
-#help, #end-now #retry, #retry-mini, #continue, #continue-mini {
+#help, #end-now, #retry, #continue {
     height: 30px;
 }
 
-#help, #end-now #retry-mini, #continue-mini {
+#help, #end-now {
     margin-top: 10px;
     width: 60px;
     border-radius: 5px;
@@ -498,18 +451,6 @@ button:active {
 }
 
 @media screen and (min-width: 600px){
-    /* #mobile-instructions {
-        display: none;
-    }
-    #mobile-instructions-button {
-        display: none;
-    } */
-    #retry-mini {
-        margin-top: 20px;
-    }
-    #continue-mini {
-        margin-top: 20px;
-    }
     #info-container {
         min-width: 250px;
     }
@@ -526,12 +467,9 @@ button:active {
     #container {
         max-width: 90%;
     }
-    #instructions, #mobile-instructions {
+    #instructions {
         font-size: 18px;
     }
-    /* #mobile-instructions {
-        display: none;
-    } */
     /* #game-board {
         grid-template-columns: 90px 90px 90px;
         grid-auto-rows: 90px;
@@ -568,7 +506,7 @@ button:active {
     #container {
         max-width: 100%;
     }
-    #instructions, #mobile-instructions {
+    #instructions {
         font-size: 16px;
     }
     /* #instructions {
